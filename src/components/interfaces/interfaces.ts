@@ -1,0 +1,26 @@
+export interface IProduct {
+  id?: string;
+  name: string;
+  EAN: string;
+  type: ProductType;
+  weight: number;
+  color: ProductColor;
+  active: boolean;
+}
+
+export enum ProductType {
+  Outdoor = 0,
+  Kitchen = 1,
+  LivingRoom = 2,
+  Hall = 3,
+  Bedroom = 4,
+  Nursery = 5,
+}
+
+export enum ProductColor {
+  White = 0,
+  Oak = 1,
+  Beech = 2,
+  Pine = 3,
+  CherryTree = 4,
+}
