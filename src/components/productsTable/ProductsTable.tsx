@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { IProduct } from "../interfaces/interfaces";
-import { GetData } from "../localStorage/LocalStorage";
-import { isNull } from "util";
+import { GetData, SaveData } from "../localStorage/LocalStorage";
+import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
 
 const ProductsTable: React.FC = () => {
-  const [products, setProducts] = useState<IProduct[] | null>(null);
+  const [items, setItems] = useState<IProduct[]>([]);
 
   useEffect(() => {
     let list: IProduct[] = GetData();
-    if (list.length > 0) setProducts(list);
+    if (list.length > 0) setItems(list);
   }, []);
+
+  const handleActiveChange = (event: any) => {
+    let item: IProduct | undefined = items.find(
+      (p) => p.id === event.currentTarget.id
+    );
+    if (!isNullOrUndefined(item)) {
+      item.active = !item.active;
+      let list: IProduct[] = items;
+      list.splice(items.indexOf(item), 1, item);
+      setItems(list);
+      SaveData(list);
+    }
+  };
 
   return (
     <>
-      {isNull(products) ? (
+      {items.length === 0 ? (
         <p>No products found</p>
       ) : (
         <>
@@ -33,8 +46,12 @@ const ProductsTable: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
-                <ProductRow key={product.id} item={product} />
+              {items.map((item) => (
+                <ProductRow
+                  key={item.id}
+                  item={item}
+                  handleActiveChange={handleActiveChange}
+                />
               ))}
             </tbody>
           </table>

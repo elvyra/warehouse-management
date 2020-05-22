@@ -5,11 +5,13 @@ import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
 type PropsType = {
   key?: string;
   item: IProduct;
+  handleActiveChange: any;
 };
 
-const ProductRow: React.FC<PropsType> = ({ item }: PropsType) => {
-  const handleChange = () => {};
-
+const ProductRow: React.FC<PropsType> = ({
+  item,
+  handleActiveChange,
+}: PropsType) => {
   return (
     <tr>
       <td>{item.id}</td>
@@ -22,9 +24,9 @@ const ProductRow: React.FC<PropsType> = ({ item }: PropsType) => {
         <input
           type="checkbox"
           name="isActive"
-          checked={item.active}
+          defaultChecked={item.active}
           id={item.id}
-          onChange={handleChange}
+          onChange={handleActiveChange}
         />
       </td>
       <td>
