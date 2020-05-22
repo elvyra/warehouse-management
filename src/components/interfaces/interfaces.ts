@@ -6,6 +6,12 @@ export interface IProduct {
   weight: number;
   color: ProductColor;
   active: boolean;
+  priceHistory: IPriceHistory[];
+}
+
+export interface IPriceHistory {
+  price: number;
+  date: number;
 }
 
 export enum ProductType {

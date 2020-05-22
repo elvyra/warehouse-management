@@ -76,6 +76,16 @@ const ProductForm: React.FC<PropsType> = ({
           onChange={handleChangeActive}
         />
       </label>
+      <label>
+        Price:
+        <input
+          type="text"
+          name="price"
+          defaultValue={
+            !isNullOrUndefined(product) ? product.priceHistory[0].price : 0
+          }
+        />
+      </label>
     </>
   );
 };
