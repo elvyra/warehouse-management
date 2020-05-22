@@ -22,6 +22,10 @@ const ProductCreate: React.FC = () => {
         Price:
         <input type="text" name="price" defaultValue="0" />
       </label>
+      <label>
+        Quantity:
+        <input type="text" name="quantity" defaultValue="0" />
+      </label>
       <input type="submit" value="Submit" />
     </form>
   );

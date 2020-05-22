@@ -55,6 +55,7 @@ const ProductsTable: React.FC = () => {
                 <th>Color</th>
                 <th>Active</th>
                 <th>Price</th>
+                <th>Quantity</th>
                 <th></th>
               </tr>
             </thead>

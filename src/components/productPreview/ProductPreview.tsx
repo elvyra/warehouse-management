@@ -5,6 +5,7 @@ import {
   ProductType,
   ProductColor,
   IPriceHistory,
+  IQuantityHistory,
 } from "../interfaces/interfaces";
 import { GetData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
@@ -49,6 +50,14 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
         {item.priceHistory.map((p: IPriceHistory) => (
           <p>
             {p.price} ({new Date(p.date).toLocaleString()})
+          </p>
+        ))}
+        <p>
+          <b>Quantity history:</b>
+        </p>
+        {item.quantityHistory.map((p: IQuantityHistory) => (
+          <p>
+            {p.quantity} ({new Date(p.date).toLocaleString()})
           </p>
         ))}
         <NavLink to="/products">Back to list</NavLink>

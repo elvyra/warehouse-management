@@ -32,6 +32,7 @@ const ProductRow: React.FC<PropsType> = ({
         />
       </td>
       <td>{item.priceHistory[0].price}</td>
+      <td>{item.quantityHistory[0].quantity}</td>
       <td>
         <NavLink to={`/products/${item.id}`}>View</NavLink>
         <NavLink to={`/products/${item.id}/edit`}>Edit</NavLink>
