@@ -2,15 +2,15 @@ import React from "react";
 import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
 
-type ProductFormProps = {
+type PropsType = {
   product?: IProduct;
   handleChangeActive: any;
 };
 
-const ProductForm: React.FC<ProductFormProps> = ({
+const ProductForm: React.FC<PropsType> = ({
   product,
   handleChangeActive,
-}: ProductFormProps) => {
+}: PropsType) => {
   return (
     <>
       <label>
