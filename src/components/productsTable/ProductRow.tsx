@@ -31,6 +31,7 @@ const ProductRow: React.FC<PropsType> = ({
           onChange={handleActiveChange}
         />
       </td>
+      <td>{item.priceHistory[0].price}</td>
       <td>
         <NavLink to={`/products/${item.id}`}>View</NavLink>
         <NavLink to={`/products/${item.id}/edit`}>Edit</NavLink>
