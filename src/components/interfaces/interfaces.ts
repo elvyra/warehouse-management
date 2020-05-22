@@ -10,6 +10,9 @@ export interface IProduct {
   quantityHistory: IQuantityHistory[];
 }
 
+export const currency = "€";
+export const color = "red";
+
 export interface IPriceHistory {
   price: number;
   date: number;

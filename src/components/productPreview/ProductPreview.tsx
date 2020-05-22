@@ -47,6 +47,12 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
         </p>
         <Highchart
           title={"Price history"}
+          subtitle={`Product name: ${item.name} (EAN: ${item.EAN})`}
+          xAxisTitle="Date and time"
+          xAxisCategories={item.priceHistory
+            .map((c) => new Date(c.date).toLocaleString())
+            .reverse()}
+          yAxisTitle="Price"
           data={item.priceHistory.map((c) => c.price).reverse()}
         />
         <p>
@@ -59,6 +65,12 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
         ))}
         <Highchart
           title={"Quantity history"}
+          subtitle={`Product name: ${item.name} (EAN: ${item.EAN})`}
+          xAxisTitle="Date and time"
+          xAxisCategories={item.quantityHistory
+            .map((c) => new Date(c.date).toLocaleString())
+            .reverse()}
+          yAxisTitle="Quantity"
           data={item.quantityHistory.map((c) => c.quantity).reverse()}
         />
         <p>
