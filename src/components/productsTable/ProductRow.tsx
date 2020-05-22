@@ -6,11 +6,13 @@ type PropsType = {
   key?: string;
   item: IProduct;
   handleActiveChange: any;
+  handleDelete: any;
 };
 
 const ProductRow: React.FC<PropsType> = ({
   item,
   handleActiveChange,
+  handleDelete,
 }: PropsType) => {
   return (
     <tr>
@@ -32,7 +34,9 @@ const ProductRow: React.FC<PropsType> = ({
       <td>
         <NavLink to={`/products/${item.id}`}>View</NavLink>
         <NavLink to={`/products/${item.id}/edit`}>Edit</NavLink>
-        <span>Delete</span>
+        <span id={item.id} onClick={handleDelete}>
+          Delete
+        </span>
       </td>
     </tr>
   );

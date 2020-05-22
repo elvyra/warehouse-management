@@ -20,6 +20,18 @@ const ProductsTable: React.FC = () => {
       item.active = !item.active;
       let list: IProduct[] = items;
       list.splice(items.indexOf(item), 1, item);
+      SaveData(list);
+      setItems(list);
+    }
+  };
+
+  const handleDelete = (event: any) => {
+    let item: IProduct | undefined = items.find(
+      (p) => p.id === event.currentTarget.id
+    );
+    if (!isNullOrUndefined(item)) {
+      let list: IProduct[] = items.slice(0);
+      list.splice(items.indexOf(item), 1);
       setItems(list);
       SaveData(list);
     }
@@ -51,6 +63,7 @@ const ProductsTable: React.FC = () => {
                   key={item.id}
                   item={item}
                   handleActiveChange={handleActiveChange}
+                  handleDelete={handleDelete}
                 />
               ))}
             </tbody>
