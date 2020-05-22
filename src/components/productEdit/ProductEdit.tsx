@@ -1,6 +1,10 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { IProduct, IPriceHistory } from "../interfaces/interfaces";
+import {
+  IProduct,
+  IPriceHistory,
+  IQuantityHistory,
+} from "../interfaces/interfaces";
 import { GetData, SaveData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import ProductForm from "../productForm/ProductForm";
@@ -29,14 +33,27 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
 
   const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(event.currentTarget);
     let price: IPriceHistory = {
       price: Number(event.currentTarget.price.value),
       date: Date.now(),
     };
-    console.log(price);
     item!.priceHistory.unshift(price);
     if (item!.priceHistory.length > 5) item!.priceHistory.length = 5;
+    let list: IProduct[] = items.slice(0);
+    list.splice(index, 1, item!);
+    SaveData(list);
+  };
+
+  const handleUpdateQuantity = (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
+    event.preventDefault();
+    let quantity: IQuantityHistory = {
+      quantity: Number(event.currentTarget.quantity.value),
+      date: Date.now(),
+    };
+    item!.quantityHistory.unshift(quantity);
+    if (item!.quantityHistory.length > 5) item!.quantityHistory.length = 5;
     let list: IProduct[] = items.slice(0);
     list.splice(index, 1, item!);
     SaveData(list);
@@ -68,6 +85,27 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
         <p key={ph.date}>
           <b>Price:</b> {ph.price} (<b>Updated:</b>{" "}
           {new Date(ph.date).toLocaleString()})
+        </p>
+      ))}
+      <form onSubmit={handleUpdateQuantity}>
+        <input type="text" name="id" defaultValue={id} hidden />
+        <label>
+          Price:
+          <input
+            type="text"
+            name="quantity"
+            placeholder={item!.quantityHistory[0].quantity.toString()}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+      <p>
+        <b>Quantity history:</b>
+      </p>
+      {item!.quantityHistory.map((qh: IQuantityHistory) => (
+        <p key={qh.date}>
+          <b>Quantity:</b> {qh.quantity} (<b>Updated:</b>
+          {new Date(qh.date).toLocaleString()})
         </p>
       ))}
     </>

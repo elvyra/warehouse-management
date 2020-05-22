@@ -17,6 +17,14 @@ export const CreateNewProduct = (event: React.FormEvent<HTMLFormElement>) => {
         date: Date.now(),
       },
     ],
+    quantityHistory: [
+      {
+        quantity: Number(
+          ((target.quantity as unknown) as HTMLInputElement).value
+        ),
+        date: Date.now(),
+      },
+    ],
   };
   product.id = NewId();
   return product;
@@ -34,6 +42,7 @@ export const CreateEditedProduct = (
     color: Number(((target.color as unknown) as HTMLInputElement).value),
     active: ((target.active as unknown) as HTMLInputElement).checked,
     priceHistory: [],
+    quantityHistory: [],
   };
   product.id = ((target.id as unknown) as HTMLInputElement).value;
   return product;

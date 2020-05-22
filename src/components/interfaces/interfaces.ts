@@ -7,10 +7,16 @@ export interface IProduct {
   color: ProductColor;
   active: boolean;
   priceHistory: IPriceHistory[];
+  quantityHistory: IQuantityHistory[];
 }
 
 export interface IPriceHistory {
   price: number;
+  date: number;
+}
+
+export interface IQuantityHistory {
+  quantity: number;
   date: number;
 }
 
