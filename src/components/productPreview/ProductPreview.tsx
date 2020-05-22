@@ -9,6 +9,7 @@ import {
 } from "../interfaces/interfaces";
 import { GetData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
+import Highchart from "./Highchart";
 
 interface PropsType extends RouteComponentProps {
   id: string;
@@ -44,6 +45,7 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
         <p>
           <b>Active: </b> {item.active ? "active" : "not active"}
         </p>
+        <Highchart />
         <p>
           <b>Price history:</b>
         </p>
@@ -52,6 +54,7 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
             {p.price} ({new Date(p.date).toLocaleString()})
           </p>
         ))}
+        <Highchart />
         <p>
           <b>Quantity history:</b>
         </p>
