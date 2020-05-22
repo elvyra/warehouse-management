@@ -1,6 +1,11 @@
 import React from "react";
 import { NavLink, RouteComponentProps } from "react-router-dom";
-import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
+import {
+  IProduct,
+  ProductType,
+  ProductColor,
+  IPriceHistory,
+} from "../interfaces/interfaces";
 import { GetData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 
@@ -38,6 +43,14 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
         <p>
           <b>Active: </b> {item.active ? "active" : "not active"}
         </p>
+        <p>
+          <b>Price history:</b>
+        </p>
+        {item.priceHistory.map((p: IPriceHistory) => (
+          <p>
+            {p.price} ({new Date(p.date).toLocaleString()})
+          </p>
+        ))}
         <NavLink to="/products">Back to list</NavLink>
       </>
     );
