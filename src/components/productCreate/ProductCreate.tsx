@@ -18,6 +18,10 @@ const ProductCreate: React.FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <ProductForm handleChangeActive={handleChangeActive} />
+      <label>
+        Price:
+        <input type="text" name="price" defaultValue="0" />
+      </label>
       <input type="submit" value="Submit" />
     </form>
   );
