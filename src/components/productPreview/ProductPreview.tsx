@@ -45,7 +45,10 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
         <p>
           <b>Active: </b> {item.active ? "active" : "not active"}
         </p>
-        <Highchart />
+        <Highchart
+          title={"Price history"}
+          data={item.priceHistory.map((c) => c.price).reverse()}
+        />
         <p>
           <b>Price history:</b>
         </p>
@@ -54,7 +57,10 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
             {p.price} ({new Date(p.date).toLocaleString()})
           </p>
         ))}
-        <Highchart />
+        <Highchart
+          title={"Quantity history"}
+          data={item.quantityHistory.map((c) => c.quantity).reverse()}
+        />
         <p>
           <b>Quantity history:</b>
         </p>
