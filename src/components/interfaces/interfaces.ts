@@ -11,7 +11,7 @@ export interface IProduct {
 export enum ProductType {
   Outdoor = 0,
   Kitchen = 1,
-  LivingRoom = 2,
+  "Living Room" = 2,
   Hall = 3,
   Bedroom = 4,
   Nursery = 5,
@@ -22,5 +22,5 @@ export enum ProductColor {
   Oak = 1,
   Beech = 2,
   Pine = 3,
-  CherryTree = 4,
+  "Cherry Tree" = 4,
 }
