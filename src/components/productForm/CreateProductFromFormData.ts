@@ -1,10 +1,9 @@
 import { IProduct } from "../interfaces/interfaces";
 
-export const NewId = () => Math.random().toString(36).substr(2, 9);
-
 export const CreateNewProduct = (event: React.FormEvent<HTMLFormElement>) => {
   let target = event.currentTarget;
   let product: IProduct = {
+    id: "",
     name: ((target.name as unknown) as HTMLInputElement).value,
     EAN: ((target.ean as unknown) as HTMLInputElement).value,
     type: Number(((target.type as unknown) as HTMLInputElement).value),
@@ -26,7 +25,6 @@ export const CreateNewProduct = (event: React.FormEvent<HTMLFormElement>) => {
       },
     ],
   };
-  product.id = NewId();
   return product;
 };
 

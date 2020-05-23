@@ -81,3 +81,15 @@ export const deteleFromList = (id: string): IProduct | null => {
     return item;
   }
 };
+
+// Generates Id
+const NewId = () => Math.random().toString(36).substr(2, 9);
+
+// Creates new item
+export const createItem = (item: IProduct): IProduct => {
+  item.id = NewId();
+  let items: IProduct[] = getData();
+  items.push(item);
+  saveData(items);
+  return item;
+};
