@@ -90,7 +90,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       <form onSubmit={handleUpdateQuantity}>
         <input type="text" name="id" defaultValue={id} hidden />
         <label>
-          Price:
+          Quantity:
           <input
             type="text"
             name="quantity"
