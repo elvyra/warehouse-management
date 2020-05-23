@@ -4,6 +4,7 @@ import {
   IProduct,
   IPriceHistory,
   IQuantityHistory,
+  numberOfRecords,
 } from "../interfaces/interfaces";
 import { GetData, SaveData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
@@ -38,7 +39,8 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       date: Date.now(),
     };
     item!.priceHistory.unshift(price);
-    if (item!.priceHistory.length > 5) item!.priceHistory.length = 5;
+    if (item!.priceHistory.length > numberOfRecords)
+      item!.priceHistory.length = numberOfRecords;
     let list: IProduct[] = items.slice(0);
     list.splice(index, 1, item!);
     SaveData(list);
@@ -53,7 +55,8 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       date: Date.now(),
     };
     item!.quantityHistory.unshift(quantity);
-    if (item!.quantityHistory.length > 5) item!.quantityHistory.length = 5;
+    if (item!.quantityHistory.length > numberOfRecords)
+      item!.quantityHistory.length = numberOfRecords;
     let list: IProduct[] = items.slice(0);
     list.splice(index, 1, item!);
     SaveData(list);

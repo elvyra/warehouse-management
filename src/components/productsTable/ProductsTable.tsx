@@ -3,6 +3,7 @@ import {
   IProduct,
   IPriceHistory,
   IQuantityHistory,
+  numberOfRecords,
 } from "../interfaces/interfaces";
 import { GetData, SaveData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
@@ -50,7 +51,8 @@ const ProductsTable: React.FC = () => {
       };
       let list: IProduct[] = items;
       item!.priceHistory.unshift(price);
-      if (item!.priceHistory.length > 5) item!.priceHistory.length = 5;
+      if (item!.priceHistory.length > numberOfRecords)
+        item!.priceHistory.length = numberOfRecords;
       list.splice(items.indexOf(item!), 1, item!);
       SaveData(list);
       setItems(list);
@@ -69,7 +71,8 @@ const ProductsTable: React.FC = () => {
       };
       let list: IProduct[] = items;
       item!.quantityHistory.unshift(quantity);
-      if (item!.quantityHistory.length > 5) item!.quantityHistory.length = 5;
+      if (item!.quantityHistory.length > numberOfRecords)
+        item!.quantityHistory.length = numberOfRecords;
       list.splice(items.indexOf(item!), 1, item!);
       SaveData(list);
       setItems(list);

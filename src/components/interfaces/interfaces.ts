@@ -12,6 +12,7 @@ export interface IProduct {
 
 export const currency = "€";
 export const color = "red";
+export const numberOfRecords = 5;
 
 export interface IPriceHistory {
   price: number;
