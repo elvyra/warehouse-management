@@ -31,6 +31,25 @@ export const toggleActive = (id: string): IProduct | null => {
   }
 };
 
+// Updates item properties except price and quantity history
+export const updateProps = (product: IProduct): IProduct | null => {
+  let items: IProduct[] = getData();
+  let item: IProduct | undefined = items.find((p) => p.id === product.id);
+  if (isNullOrUndefined(item)) {
+    return null;
+  } else {
+    item.name = product.name;
+    item.EAN = product.EAN;
+    item.type = product.type;
+    item.weight = product.weight;
+    item.color = product.color;
+    item.active = product.active;
+    items.splice(items.indexOf(item), 1, item);
+    saveData(items);
+    return item;
+  }
+};
+
 // Updates item price history, returns updated item or null if not found
 export const updatePrice = (
   id: string,
@@ -93,3 +112,7 @@ export const createItem = (item: IProduct): IProduct => {
   saveData(items);
   return item;
 };
+
+// Get item from local storage
+export const getItem = (id: string): IProduct | null | undefined =>
+  getData().find((p) => p.id === id);

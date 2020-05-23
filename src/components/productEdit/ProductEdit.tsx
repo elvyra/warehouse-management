@@ -1,116 +1,126 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import {
   IProduct,
   IPriceHistory,
   IQuantityHistory,
-  numberOfRecords,
 } from "../interfaces/interfaces";
-import { getData, saveData } from "../localStorage/LocalStorage";
+import {
+  getItem,
+  updateProps,
+  updatePrice,
+  updateQuantity,
+} from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import ProductForm from "../productForm/ProductForm";
 import { CreateEditedProduct } from "../productForm/CreateProductFromFormData";
 
-interface PropsType extends RouteComponentProps {
+interface MatchParams {
   id: string;
 }
+interface PropsType extends RouteComponentProps<MatchParams> {}
 
 const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
-  let id: string = (props.match.params as PropsType).id;
-  let items: IProduct[] = getData();
-  let item: IProduct | undefined = items.find((p) => p.id === id);
-  let index: number = isNullOrUndefined(item) ? -1 : items.indexOf(item);
+  const [item, setItem] = useState<IProduct | null>(null);
+
+  useEffect(() => {
+    let product: IProduct | null | undefined = getItem(props.match.params.id);
+    if (!isNullOrUndefined(product)) setItem(product);
+  }, [props.match.params.id]);
 
   const handleChangeActive = () => {};
 
   const handleChangeProps = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    let product: IProduct = CreateEditedProduct(event);
-    product.priceHistory = item!.priceHistory;
-    let list: IProduct[] = items.slice(0);
-    list.splice(index, 1, product);
-    saveData(list);
+    setItem(updateProps(CreateEditedProduct(event)));
   };
 
   const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    let id: string | undefined = ((event.currentTarget
+      .price as unknown) as HTMLInputElement).dataset.id;
     let price: IPriceHistory = {
       price: Number(event.currentTarget.price.value),
       date: Date.now(),
     };
-    item!.priceHistory.unshift(price);
-    if (item!.priceHistory.length > numberOfRecords)
-      item!.priceHistory.length = numberOfRecords;
-    let list: IProduct[] = items.slice(0);
-    list.splice(index, 1, item!);
-    saveData(list);
+    if (!isNullOrUndefined(id)) {
+      setItem(updatePrice(id, price));
+    }
   };
 
   const handleUpdateQuantity = (
     event: React.FormEvent<HTMLFormElement>
   ): void => {
     event.preventDefault();
+    let id: string | undefined = ((event.currentTarget
+      .quantity as unknown) as HTMLInputElement).dataset.id;
     let quantity: IQuantityHistory = {
       quantity: Number(event.currentTarget.quantity.value),
       date: Date.now(),
     };
-    item!.quantityHistory.unshift(quantity);
-    if (item!.quantityHistory.length > numberOfRecords)
-      item!.quantityHistory.length = numberOfRecords;
-    let list: IProduct[] = items.slice(0);
-    list.splice(index, 1, item!);
-    saveData(list);
+    if (!isNullOrUndefined(id)) {
+      setItem(updateQuantity(id, quantity));
+    }
   };
 
   return (
     <>
-      <form onSubmit={handleChangeProps}>
-        <input type="text" name="id" defaultValue={id} hidden />
-        <ProductForm product={item} handleChangeActive={handleChangeActive} />
-        <input type="submit" value="Submit" />
-      </form>
-      <form onSubmit={handleUpdatePrice}>
-        <input type="text" name="id" defaultValue={id} hidden />
-        <label>
-          Price:
-          <input
-            type="text"
-            name="price"
-            placeholder={item!.priceHistory[0].price.toString()}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <p>
-        <b>Price history:</b>
-      </p>
-      {item!.priceHistory.map((ph: IPriceHistory) => (
-        <p key={ph.date}>
-          <b>Price:</b> {ph.price} (<b>Updated:</b>{" "}
-          {new Date(ph.date).toLocaleString()})
-        </p>
-      ))}
-      <form onSubmit={handleUpdateQuantity}>
-        <input type="text" name="id" defaultValue={id} hidden />
-        <label>
-          Quantity:
-          <input
-            type="text"
-            name="quantity"
-            placeholder={item!.quantityHistory[0].quantity.toString()}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <p>
-        <b>Quantity history:</b>
-      </p>
-      {item!.quantityHistory.map((qh: IQuantityHistory) => (
-        <p key={qh.date}>
-          <b>Quantity:</b> {qh.quantity} (<b>Updated:</b>
-          {new Date(qh.date).toLocaleString()})
-        </p>
-      ))}
+      {isNullOrUndefined(item) ? (
+        <p>Product not found</p>
+      ) : (
+        <>
+          <form onSubmit={handleChangeProps}>
+            <input type="text" name="id" defaultValue={item.id} hidden />
+            <ProductForm
+              product={item}
+              handleChangeActive={handleChangeActive}
+            />
+            <input type="submit" value="Save" />
+          </form>
+          <form onSubmit={handleUpdatePrice}>
+            <label>
+              Price:
+              <input
+                type="text"
+                name="price"
+                data-id={item.id}
+                placeholder={item.priceHistory[0].price.toString()}
+              />
+            </label>
+            <input type="submit" value="Update price" />
+          </form>
+          <p>
+            <b>Price history:</b>
+          </p>
+          {item.priceHistory.map((c: IPriceHistory) => (
+            <p key={c.date}>
+              <b>Price:</b> {c.price} (<b>Updated:</b>{" "}
+              {new Date(c.date).toLocaleString()})
+            </p>
+          ))}
+          <form onSubmit={handleUpdateQuantity}>
+            <label>
+              Quantity:
+              <input
+                type="text"
+                name="quantity"
+                data-id={item.id}
+                placeholder={item!.quantityHistory[0].quantity.toString()}
+              />
+            </label>
+            <input type="submit" value="Update Quantity" />
+          </form>
+          <p>
+            <b>Quantity history:</b>
+          </p>
+          {item.quantityHistory.map((c: IQuantityHistory) => (
+            <p key={c.date}>
+              <b>Quantity:</b> {c.quantity} (<b>Updated:</b>
+              {new Date(c.date).toLocaleString()})
+            </p>
+          ))}
+        </>
+      )}
     </>
   );
 };
