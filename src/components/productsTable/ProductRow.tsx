@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
-import { Button, Form } from "react-bootstrap";
+import { Button, ButtonGroup, Form } from "react-bootstrap";
 
 type PropsType = {
   key?: string;
@@ -57,21 +57,23 @@ const ProductRow: React.FC<PropsType> = ({
         />
       </td>
       <td>
-        <NavLink
-          to={`/products/${item.id}`}
-          className="mr-2 btn btn-outline-primary"
-        >
-          View
-        </NavLink>
-        <NavLink
-          to={`/products/${item.id}/edit`}
-          className="mr-2 btn btn-outline-secondary"
-        >
-          Edit
-        </NavLink>
-        <Button variant="danger" data-id={item.id} onClick={handleDelete}>
-          Danger
-        </Button>
+        <ButtonGroup>
+          <NavLink
+            to={`/products/${item.id}`}
+            className="btn btn-outline-primary"
+          >
+            View
+          </NavLink>
+          <NavLink
+            to={`/products/${item.id}/edit`}
+            className="btn btn-outline-secondary"
+          >
+            Edit
+          </NavLink>
+          <Button variant="danger" data-id={item.id} onClick={handleDelete}>
+            Delete
+          </Button>
+        </ButtonGroup>
       </td>
     </tr>
   );
