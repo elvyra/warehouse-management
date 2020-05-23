@@ -1,10 +1,11 @@
 import { IProduct } from "../interfaces/interfaces";
 
-export const NewId = () => Math.random().toString(36).substr(2, 9);
-
-export const CreateNewProduct = (event: React.FormEvent<HTMLFormElement>) => {
+export const CreateNewProduct = (
+  event: React.FormEvent<HTMLFormElement>
+): IProduct => {
   let target = event.currentTarget;
-  let product: IProduct = {
+  return {
+    id: "",
     name: ((target.name as unknown) as HTMLInputElement).value,
     EAN: ((target.ean as unknown) as HTMLInputElement).value,
     type: Number(((target.type as unknown) as HTMLInputElement).value),
@@ -26,15 +27,14 @@ export const CreateNewProduct = (event: React.FormEvent<HTMLFormElement>) => {
       },
     ],
   };
-  product.id = NewId();
-  return product;
 };
 
 export const CreateEditedProduct = (
   event: React.FormEvent<HTMLFormElement>
-) => {
+): IProduct => {
   let target = event.currentTarget;
-  let product: IProduct = {
+  return {
+    id: ((target.id as unknown) as HTMLInputElement).value,
     name: ((target.name as unknown) as HTMLInputElement).value,
     EAN: ((target.ean as unknown) as HTMLInputElement).value,
     type: Number(((target.type as unknown) as HTMLInputElement).value),
@@ -44,6 +44,4 @@ export const CreateEditedProduct = (
     priceHistory: [],
     quantityHistory: [],
   };
-  product.id = ((target.id as unknown) as HTMLInputElement).value;
-  return product;
 };

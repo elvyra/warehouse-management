@@ -6,12 +6,16 @@ type PropsType = {
   key?: string;
   item: IProduct;
   handleActiveChange: any;
+  handlePriceUpdate: any;
+  handleQuantityUpdate: any;
   handleDelete: any;
 };
 
 const ProductRow: React.FC<PropsType> = ({
   item,
   handleActiveChange,
+  handlePriceUpdate,
+  handleQuantityUpdate,
   handleDelete,
 }: PropsType) => {
   return (
@@ -25,18 +29,34 @@ const ProductRow: React.FC<PropsType> = ({
       <td>
         <input
           type="checkbox"
-          name="isActive"
+          name="active"
           defaultChecked={item.active}
-          id={item.id}
+          data-id={item.id}
           onChange={handleActiveChange}
         />
       </td>
-      <td>{item.priceHistory[0].price}</td>
-      <td>{item.quantityHistory[0].quantity}</td>
+      <td>
+        <input
+          type="text"
+          name="price"
+          data-id={item.id}
+          defaultValue={item.priceHistory[0].price}
+          onKeyUp={handlePriceUpdate}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          name="quantity"
+          data-id={item.id}
+          defaultValue={item.quantityHistory[0].quantity}
+          onKeyUp={handleQuantityUpdate}
+        />
+      </td>
       <td>
         <NavLink to={`/products/${item.id}`}>View</NavLink>
         <NavLink to={`/products/${item.id}/edit`}>Edit</NavLink>
-        <span id={item.id} onClick={handleDelete}>
+        <span data-id={item.id} onClick={handleDelete}>
           Delete
         </span>
       </td>
