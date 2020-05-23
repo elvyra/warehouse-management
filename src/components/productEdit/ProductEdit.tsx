@@ -6,7 +6,7 @@ import {
   IQuantityHistory,
   numberOfRecords,
 } from "../interfaces/interfaces";
-import { GetData, SaveData } from "../localStorage/LocalStorage";
+import { getData, saveData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import ProductForm from "../productForm/ProductForm";
 import { CreateEditedProduct } from "../productForm/CreateProductFromFormData";
@@ -17,7 +17,7 @@ interface PropsType extends RouteComponentProps {
 
 const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
   let id: string = (props.match.params as PropsType).id;
-  let items: IProduct[] = GetData();
+  let items: IProduct[] = getData();
   let item: IProduct | undefined = items.find((p) => p.id === id);
   let index: number = isNullOrUndefined(item) ? -1 : items.indexOf(item);
 
@@ -29,7 +29,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     product.priceHistory = item!.priceHistory;
     let list: IProduct[] = items.slice(0);
     list.splice(index, 1, product);
-    SaveData(list);
+    saveData(list);
   };
 
   const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -43,7 +43,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       item!.priceHistory.length = numberOfRecords;
     let list: IProduct[] = items.slice(0);
     list.splice(index, 1, item!);
-    SaveData(list);
+    saveData(list);
   };
 
   const handleUpdateQuantity = (
@@ -59,7 +59,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       item!.quantityHistory.length = numberOfRecords;
     let list: IProduct[] = items.slice(0);
     list.splice(index, 1, item!);
-    SaveData(list);
+    saveData(list);
   };
 
   return (

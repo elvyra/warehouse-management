@@ -7,7 +7,7 @@ import {
   IPriceHistory,
   IQuantityHistory,
 } from "../interfaces/interfaces";
-import { GetData } from "../localStorage/LocalStorage";
+import { getData } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import Highchart from "./Highchart";
 
@@ -17,7 +17,7 @@ interface PropsType extends RouteComponentProps {
 
 const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
   let id: string = (props.match.params as PropsType).id;
-  let items: IProduct[] = GetData();
+  let items: IProduct[] = getData();
   let item: IProduct | undefined = items.find((p) => p.id === id);
 
   if (isNullOrUndefined(item)) return <p>Product not found</p>;

@@ -1,3 +1,12 @@
+// Currency symbol
+export const currency = "€";
+
+// Highlight color code
+export const color = "red";
+
+// Number of max price and quantity history records
+export const numberOfRecords = 5;
+
 export interface IProduct {
   id?: string;
   name: string;
@@ -9,10 +18,6 @@ export interface IProduct {
   priceHistory: IPriceHistory[];
   quantityHistory: IQuantityHistory[];
 }
-
-export const currency = "€";
-export const color = "red";
-export const numberOfRecords = 5;
 
 export interface IPriceHistory {
   price: number;

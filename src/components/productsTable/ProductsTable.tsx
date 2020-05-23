@@ -3,91 +3,116 @@ import {
   IProduct,
   IPriceHistory,
   IQuantityHistory,
-  numberOfRecords,
 } from "../interfaces/interfaces";
-import { GetData, SaveData } from "../localStorage/LocalStorage";
+import {
+  getData,
+  toggleActive,
+  updatePrice,
+  updateQuantity,
+  deteleFromList,
+} from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
+
+// Used for receiving Price and Quantity input data
+type InputData = {
+  id: string;
+  value: string;
+};
 
 const ProductsTable: React.FC = () => {
   const [items, setItems] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    let list: IProduct[] = GetData();
+    let list: IProduct[] = getData();
     if (list.length > 0) setItems(list);
   }, []);
 
-  const handleActiveChange = (event: any) => {
-    let item: IProduct | undefined = items.find(
-      (p) =>
-        p.id ===
-        ((event.currentTarget as unknown) as HTMLInputElement).dataset.id
-    );
-    if (!isNullOrUndefined(item)) {
-      item.active = !item.active;
-      let list: IProduct[] = items;
-      list.splice(items.indexOf(item), 1, item);
-      SaveData(list);
-      setItems(list);
-    }
-  };
+  // Gets data from input data-id attribute and value and returns as tuple InputData = { id, value }
 
-  const getInputData = (event: React.KeyboardEvent) => {
+  const getInputData = (event: React.KeyboardEvent): InputData => {
+    let id:
+      | string
+      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
+      .dataset.id;
+    let value:
+      | string
+      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
+      .value;
     return {
-      itemId: ((event.currentTarget as unknown) as HTMLInputElement).dataset.id,
-      value: ((event.currentTarget as unknown) as HTMLInputElement).value,
+      id: isNullOrUndefined(id) ? "" : id,
+      value: isNullOrUndefined(value) ? "" : value,
     };
   };
 
+  // Updates items list (useState hook) with new item info
+  const updateItems = (item: IProduct | null | undefined) => {
+    if (!isNullOrUndefined(item)) {
+      let oldItem: IProduct | undefined = items.find((p) => p.id === item.id);
+      if (!isNullOrUndefined(oldItem)) {
+        let list: IProduct[] = items;
+        list.splice(items.indexOf(oldItem), 1, item);
+        setItems(list);
+      }
+    }
+  };
+
+  // Deletes item from items list (useState hook)
+  const deleteItem = (item: IProduct | null | undefined) => {
+    if (!isNullOrUndefined(item)) {
+      console.log(item.id);
+      let list: IProduct[] = items.slice();
+      let itemInList = items.find((p) => p.id === item.id);
+      if (!isNullOrUndefined(itemInList)) {
+        list.splice(items.indexOf(itemInList), 1);
+        setItems(list);
+      }
+    }
+  };
+
+  // Handle item toggle active
+  const handleActiveChange = (event: any) => {
+    let id:
+      | string
+      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
+      .dataset.id;
+    if (!isNullOrUndefined(id)) {
+      updateItems(toggleActive(id));
+    }
+  };
+
+  // Handle item price update
   const handlePriceUpdate = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
-      let inputData = getInputData(event);
-      let item: IProduct | undefined = items.find(
-        (p) => p.id === inputData.itemId
-      );
+      let inputData: InputData = getInputData(event);
       let price: IPriceHistory = {
         price: Number(inputData.value),
         date: Date.now(),
       };
-      let list: IProduct[] = items;
-      item!.priceHistory.unshift(price);
-      if (item!.priceHistory.length > numberOfRecords)
-        item!.priceHistory.length = numberOfRecords;
-      list.splice(items.indexOf(item!), 1, item!);
-      SaveData(list);
-      setItems(list);
+      updateItems(updatePrice(inputData.id, price));
     }
   };
 
+  // Handle item quantity update
   const handleQuantityUpdate = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
-      let inputData = getInputData(event);
-      let item: IProduct | undefined = items.find(
-        (p) => p.id === inputData.itemId
-      );
+      let inputData: InputData = getInputData(event);
       let quantity: IQuantityHistory = {
         quantity: Number(inputData.value),
         date: Date.now(),
       };
-      let list: IProduct[] = items;
-      item!.quantityHistory.unshift(quantity);
-      if (item!.quantityHistory.length > numberOfRecords)
-        item!.quantityHistory.length = numberOfRecords;
-      list.splice(items.indexOf(item!), 1, item!);
-      SaveData(list);
-      setItems(list);
+      updateItems(updateQuantity(inputData.id, quantity));
     }
   };
 
+  // Handle item delete
   const handleDelete = (event: any) => {
-    let item: IProduct | undefined = items.find(
-      (p) => p.id === event.currentTarget.id
-    );
-    if (!isNullOrUndefined(item)) {
-      let list: IProduct[] = items.slice(0);
-      list.splice(items.indexOf(item), 1);
-      setItems(list);
-      SaveData(list);
+    let id:
+      | string
+      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
+      .dataset.id;
+    if (!isNullOrUndefined(id)) {
+      deleteItem(deteleFromList(id));
     }
   };
 

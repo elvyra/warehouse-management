@@ -29,7 +29,7 @@ const ProductRow: React.FC<PropsType> = ({
       <td>
         <input
           type="checkbox"
-          name="isActive"
+          name="active"
           defaultChecked={item.active}
           data-id={item.id}
           onChange={handleActiveChange}
@@ -56,7 +56,7 @@ const ProductRow: React.FC<PropsType> = ({
       <td>
         <NavLink to={`/products/${item.id}`}>View</NavLink>
         <NavLink to={`/products/${item.id}/edit`}>Edit</NavLink>
-        <span id={item.id} onClick={handleDelete}>
+        <span data-id={item.id} onClick={handleDelete}>
           Delete
         </span>
       </td>
