@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Toast } from "react-bootstrap";
 import { delayToast } from "../interfaces/interfaces";
+import { IToast } from "../interfaces/interfaces";
 
-const ToastCustom: React.FC<any> = () => {
+type PropsType = {
+  key: number;
+  toast: IToast;
+};
+
+const ToastCustom: React.FC<PropsType> = ({ key, toast }: PropsType) => {
   const [show, setShow] = useState(true);
 
   return (
@@ -16,7 +22,7 @@ const ToastCustom: React.FC<any> = () => {
       >
         <Toast.Header>
           <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
-          <strong className="mr-auto">Bootstrap</strong>
+          <strong className="mr-auto">Bootstrap {toast.title}</strong>
           <small>11 mins ago</small>
         </Toast.Header>
         <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>

@@ -46,3 +46,9 @@ export enum ProductColor {
   Pine = 3,
   "Cherry Tree" = 4,
 }
+
+export interface IToast {
+  id: number;
+  title: string;
+  text: string;
+}
