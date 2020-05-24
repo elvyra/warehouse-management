@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { NavLink, RouteComponentProps } from "react-router-dom";
-import {
-  IProduct,
-  ProductType,
-  ProductColor,
-  IHistory,
-} from "../interfaces/interfaces";
+import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
 import { getItem } from "../localStorage/LocalStorage";
-import { currency, unit, numberOfRecords } from "../interfaces/interfaces";
+import { currency, unit } from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
-import Highchart from "./Highchart";
-import { Tab, Tabs, Card, CardDeck, ListGroup, Badge } from "react-bootstrap";
+import HistoryPreview from "./HistoryPreview";
+import { Tab, Tabs, ListGroup, Badge } from "react-bootstrap";
 
 interface MatchParams {
   id: string;
@@ -79,68 +74,22 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
               </ListGroup>
             </Tab>
             <Tab eventKey="price" title="Price history">
-              <CardDeck className="mt-4 mb-4">
-                <Card style={{ flex: "1 1" }}>
-                  <Card.Body>
-                    <Card.Title>Price history</Card.Title>
-                    <Card.Text>
-                      Last {numberOfRecords} entries are stored in database.
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup variant="flush">
-                    {item.priceHistory.map((p: IHistory) => (
-                      <ListGroup.Item>
-                        {p.value} ({new Date(p.date).toLocaleString()})
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
-                <Card style={{ flex: "2 1" }}>
-                  <Highchart
-                    title={"Price history"}
-                    subtitle={`Product name: ${item.name} (EAN: ${item.EAN})`}
-                    xAxisTitle="Date and time"
-                    xAxisCategories={item.priceHistory
-                      .map((c) => new Date(c.date).toLocaleString())
-                      .reverse()}
-                    yAxisTitle="Price"
-                    yAxisUnits={currency}
-                    data={item.priceHistory.map((c) => c.value).reverse()}
-                  />
-                </Card>
-              </CardDeck>
+              <HistoryPreview
+                title="Price"
+                itemName={item.name}
+                itemEAN={item.EAN}
+                units={currency}
+                data={item.priceHistory}
+              />
             </Tab>
             <Tab eventKey="quantity" title="Quantity history">
-              <CardDeck className="mt-4 mb-4">
-                <Card style={{ flex: "1 1" }}>
-                  <Card.Body>
-                    <Card.Title>Quantity history</Card.Title>
-                    <Card.Text>
-                      Last {numberOfRecords} entries are stored in database.
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup variant="flush">
-                    {item.quantityHistory.map((p: IHistory) => (
-                      <ListGroup.Item>
-                        {p.value} ({new Date(p.value).toLocaleString()})
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
-                <Card style={{ flex: "2 1" }}>
-                  <Highchart
-                    title={"Quantity history"}
-                    subtitle={`Product name: ${item.name} (EAN: ${item.EAN})`}
-                    xAxisTitle="Date and time"
-                    xAxisCategories={item.quantityHistory
-                      .map((c) => new Date(c.date).toLocaleString())
-                      .reverse()}
-                    yAxisTitle="Quantity"
-                    yAxisUnits={unit}
-                    data={item.quantityHistory.map((c) => c.value).reverse()}
-                  />
-                </Card>
-              </CardDeck>
+              <HistoryPreview
+                title="Quantity"
+                itemName={item.name}
+                itemEAN={item.EAN}
+                units={unit}
+                data={item.quantityHistory}
+              />
             </Tab>
           </Tabs>
           <NavLink to="/products">Back to list</NavLink>

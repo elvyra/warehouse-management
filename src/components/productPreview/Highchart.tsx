@@ -1,5 +1,5 @@
 import React from "react";
-import { currency, color } from "../interfaces/interfaces";
+import { color } from "../interfaces/interfaces";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
