@@ -10,6 +10,9 @@ export const color = "red";
 // Number of max price and quantity history records
 export const numberOfRecords = 5;
 
+// Toast (alert) show time
+export const delayToast = 3000;
+
 export interface IProduct {
   id?: string;
   name: string;

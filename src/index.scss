@@ -9,3 +9,13 @@ $theme-colors: (
 .highlight {
   background-color: theme-color-level("danger", -11);
 }
+
+.toast {
+  &-top-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 2rem;
+    margin-right: 2rem;
+  }
+}
