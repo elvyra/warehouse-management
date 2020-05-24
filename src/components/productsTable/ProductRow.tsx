@@ -20,7 +20,7 @@ const ProductRow: React.FC<PropsType> = ({
   handleDelete,
 }: PropsType) => {
   return (
-    <tr>
+    <tr className={item.quantityHistory[0].value <= 0 ? "highlight" : ""}>
       <td>{item.id}</td>
       <td>{item.name}</td>
       <td>{item.EAN}</td>
@@ -44,6 +44,9 @@ const ProductRow: React.FC<PropsType> = ({
           data-id={item.id}
           defaultValue={item.priceHistory[0].value}
           onKeyUp={handlePriceUpdate}
+          className={
+            item.priceHistory[0].value <= 0 ? "border-danger text-danger" : ""
+          }
         />
       </td>
       <td>
@@ -54,6 +57,11 @@ const ProductRow: React.FC<PropsType> = ({
           data-id={item.id}
           defaultValue={item.quantityHistory[0].value}
           onKeyUp={handleQuantityUpdate}
+          className={
+            item.quantityHistory[0].value <= 0
+              ? "border-danger text-danger"
+              : ""
+          }
         />
       </td>
       <td>
