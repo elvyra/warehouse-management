@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 import {
   IProduct,
@@ -14,6 +15,15 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductForm from "../productForm/ProductForm";
 import { CreateEditedProduct } from "../productForm/CreateProductFromFormData";
+import {
+  Col,
+  Row,
+  Form,
+  ListGroup,
+  Button,
+  CardDeck,
+  Card,
+} from "react-bootstrap";
 
 interface MatchParams {
   id: string;
@@ -68,58 +78,117 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       {isNullOrUndefined(item) ? (
         <p>Product not found</p>
       ) : (
-        <>
-          <form onSubmit={handleChangeProps}>
-            <input type="text" name="id" defaultValue={item.id} hidden />
-            <ProductForm
-              product={item}
-              handleChangeActive={handleChangeActive}
-            />
-            <input type="submit" value="Save" />
-          </form>
-          <form onSubmit={handleUpdatePrice}>
-            <label>
-              Price:
-              <input
-                type="text"
-                name="price"
-                data-id={item.id}
-                placeholder={item.priceHistory[0].price.toString()}
-              />
-            </label>
-            <input type="submit" value="Update price" />
-          </form>
-          <p>
-            <b>Price history:</b>
-          </p>
-          {item.priceHistory.map((c: IPriceHistory) => (
-            <p key={c.date}>
-              <b>Price:</b> {c.price} (<b>Updated:</b>{" "}
-              {new Date(c.date).toLocaleString()})
-            </p>
-          ))}
-          <form onSubmit={handleUpdateQuantity}>
-            <label>
-              Quantity:
-              <input
-                type="text"
-                name="quantity"
-                data-id={item.id}
-                placeholder={item!.quantityHistory[0].quantity.toString()}
-              />
-            </label>
-            <input type="submit" value="Update Quantity" />
-          </form>
-          <p>
-            <b>Quantity history:</b>
-          </p>
-          {item.quantityHistory.map((c: IQuantityHistory) => (
-            <p key={c.date}>
-              <b>Quantity:</b> {c.quantity} (<b>Updated:</b>
-              {new Date(c.date).toLocaleString()})
-            </p>
-          ))}
-        </>
+        <CardDeck>
+          <Card style={{ flex: "1 1 100%" }} className="mb-4">
+            <Card.Body>
+              <Card.Title>Product details</Card.Title>
+              <Card.Text>
+                <Form onSubmit={handleChangeProps}>
+                  <Form.Group as={Row}>
+                    <Form.Label column md="2">
+                      Id
+                    </Form.Label>
+                    <Col md="10">
+                      <Form.Control
+                        type="text"
+                        name="id"
+                        defaultValue={item.id}
+                        plaintext
+                        readOnly
+                      />
+                    </Col>
+                  </Form.Group>
+                  <ProductForm
+                    product={item}
+                    handleChangeActive={handleChangeActive}
+                  />
+                  <Form.Row>
+                    <Col md="2" />
+                    <Col md="10">
+                      <Button type="submit" className="mr-2">
+                        Save
+                      </Button>
+                      <NavLink
+                        to="/products"
+                        className="btn btn-link text-secondary"
+                      >
+                        Back to list
+                      </NavLink>
+                    </Col>
+                  </Form.Row>
+                </Form>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+
+          <Card>
+            <Card.Body>
+              <Card.Title>Price</Card.Title>
+              <Card.Text>
+                <Form onSubmit={handleUpdatePrice}>
+                  <Form.Group as={Row} className="w-100">
+                    <Form.Label column md="3">
+                      Current
+                    </Form.Label>
+                    <Col md="7">
+                      <Form.Control
+                        placeholder={item.priceHistory[0].price.toString()}
+                        type="text"
+                        name="price"
+                        data-id={item.id}
+                      />
+                    </Col>
+                    <Col md="2">
+                      <Button type="submit">Update</Button>
+                    </Col>
+                  </Form.Group>
+                </Form>
+              </Card.Text>
+            </Card.Body>
+            <ListGroup variant="flush">
+              {item.priceHistory.map((c: IPriceHistory) => (
+                <ListGroup.Item key={c.date}>
+                  Price: {c.price} (Updated: {new Date(c.date).toLocaleString()}
+                  )
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Card>
+
+          <Card>
+            <Card.Body>
+              <Card.Title>Quantity</Card.Title>
+              <Card.Text>
+                <Form onSubmit={handleUpdateQuantity}>
+                  <Form.Group as={Row} className="w-100">
+                    <Form.Label column md="3">
+                      Current
+                    </Form.Label>
+                    <Col md="7">
+                      <Form.Control
+                        type="text"
+                        name="quantity"
+                        data-id={item.id}
+                        placeholder={item!.quantityHistory[0].quantity.toString()}
+                      />
+                    </Col>
+                    <Col md="2">
+                      <Button type="submit">Update</Button>
+                    </Col>
+                  </Form.Group>
+                </Form>
+              </Card.Text>
+            </Card.Body>
+            <ListGroup variant="flush">
+              {item.quantityHistory.map((c: IQuantityHistory) => (
+                <ListGroup.Item key={c.date}>
+                  Quantity: {c.quantity} (Updated:{" "}
+                  {new Date(c.date).toLocaleString()})
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Card>
+        </CardDeck>
       )}
     </>
   );

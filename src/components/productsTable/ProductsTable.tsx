@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
+  currency,
+  unit,
   IProduct,
   IPriceHistory,
   IQuantityHistory,
@@ -13,6 +15,7 @@ import {
 } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
+import { Table } from "react-bootstrap";
 
 // Used for receiving Price and Quantity input data
 type InputData = {
@@ -122,8 +125,8 @@ const ProductsTable: React.FC = () => {
         <p>No products found</p>
       ) : (
         <>
-          <h1>Products Table</h1>
-          <table>
+          <h3>Products Table</h3>
+          <Table hover responsive>
             <thead>
               <tr>
                 <th>Id</th>
@@ -133,8 +136,8 @@ const ProductsTable: React.FC = () => {
                 <th>Weight</th>
                 <th>Color</th>
                 <th>Active</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <th>Price, {currency}</th>
+                <th>Quantity, {unit}</th>
                 <th></th>
               </tr>
             </thead>
@@ -150,7 +153,7 @@ const ProductsTable: React.FC = () => {
                 />
               ))}
             </tbody>
-          </table>
+          </Table>
         </>
       )}
     </>

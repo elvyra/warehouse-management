@@ -1,6 +1,9 @@
 // Currency symbol
 export const currency = "€";
 
+// Units symbol
+export const unit = "pcs";
+
 // Highlight color code
 export const color = "red";
 
