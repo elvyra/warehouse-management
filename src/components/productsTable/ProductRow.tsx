@@ -42,7 +42,7 @@ const ProductRow: React.FC<PropsType> = ({
           name="price"
           min="0"
           data-id={item.id}
-          defaultValue={item.priceHistory[0].price}
+          defaultValue={item.priceHistory[0].value}
           onKeyUp={handlePriceUpdate}
         />
       </td>
@@ -52,7 +52,7 @@ const ProductRow: React.FC<PropsType> = ({
           name="quantity"
           min="0"
           data-id={item.id}
-          defaultValue={item.quantityHistory[0].quantity}
+          defaultValue={item.quantityHistory[0].value}
           onKeyUp={handleQuantityUpdate}
         />
       </td>

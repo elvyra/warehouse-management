@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import HomePage from "../homePage/HomePage";
 import ProductTable from "../productsTable/ProductsTable";
 import ProducCreate from "../productCreate/ProductCreate";
 import ProductPreview from "../productPreview/ProductPreview";
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <Container>
         <h1>Warehouse management</h1>
         <Switch>
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/products" component={ProductTable} />
           <Route exact path="/products/create" component={ProducCreate} />
           <Route path="/products/:id/edit" component={ProductEdit} />

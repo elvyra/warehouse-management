@@ -10,6 +10,7 @@ type PropsType = {
   xAxisTitle: string;
   xAxisCategories: Array<string>;
   yAxisTitle: string;
+  yAxisUnits: string;
 };
 
 const Highchart: React.FC<PropsType> = ({
@@ -19,6 +20,7 @@ const Highchart: React.FC<PropsType> = ({
   xAxisTitle,
   xAxisCategories,
   yAxisTitle,
+  yAxisUnits,
 }: PropsType) => {
   const options = {
     chart: {
@@ -41,7 +43,7 @@ const Highchart: React.FC<PropsType> = ({
         text: yAxisTitle,
       },
       labels: {
-        format: `{value} ${currency}`,
+        format: `{value} ${yAxisUnits}`,
       },
     },
     plotOptions: {

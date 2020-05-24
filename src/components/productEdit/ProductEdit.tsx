@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
-import {
-  IProduct,
-  IPriceHistory,
-  IQuantityHistory,
-} from "../interfaces/interfaces";
+import { IProduct, IHistory } from "../interfaces/interfaces";
 import {
   getItem,
   updateProps,
@@ -49,8 +45,8 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     event.preventDefault();
     let id: string | undefined = ((event.currentTarget
       .price as unknown) as HTMLInputElement).dataset.id;
-    let price: IPriceHistory = {
-      price: Number(event.currentTarget.price.value),
+    let price: IHistory = {
+      value: Number(event.currentTarget.price.value),
       date: Date.now(),
     };
     if (!isNullOrUndefined(id)) {
@@ -64,8 +60,8 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     event.preventDefault();
     let id: string | undefined = ((event.currentTarget
       .quantity as unknown) as HTMLInputElement).dataset.id;
-    let quantity: IQuantityHistory = {
-      quantity: Number(event.currentTarget.quantity.value),
+    let quantity: IHistory = {
+      value: Number(event.currentTarget.quantity.value),
       date: Date.now(),
     };
     if (!isNullOrUndefined(id)) {
@@ -132,7 +128,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
                     </Form.Label>
                     <Col md="7">
                       <Form.Control
-                        placeholder={item.priceHistory[0].price.toString()}
+                        placeholder={item.priceHistory[0].value.toString()}
                         type="text"
                         name="price"
                         data-id={item.id}
@@ -146,9 +142,9 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
               </Card.Text>
             </Card.Body>
             <ListGroup variant="flush">
-              {item.priceHistory.map((c: IPriceHistory) => (
+              {item.priceHistory.map((c: IHistory) => (
                 <ListGroup.Item key={c.date}>
-                  Price: {c.price} (Updated: {new Date(c.date).toLocaleString()}
+                  Price: {c.value} (Updated: {new Date(c.date).toLocaleString()}
                   )
                 </ListGroup.Item>
               ))}
@@ -169,7 +165,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
                         type="text"
                         name="quantity"
                         data-id={item.id}
-                        placeholder={item!.quantityHistory[0].quantity.toString()}
+                        placeholder={item!.quantityHistory[0].value.toString()}
                       />
                     </Col>
                     <Col md="2">
@@ -180,9 +176,9 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
               </Card.Text>
             </Card.Body>
             <ListGroup variant="flush">
-              {item.quantityHistory.map((c: IQuantityHistory) => (
+              {item.quantityHistory.map((c: IHistory) => (
                 <ListGroup.Item key={c.date}>
-                  Quantity: {c.quantity} (Updated:{" "}
+                  Quantity: {c.value} (Updated:{" "}
                   {new Date(c.date).toLocaleString()})
                 </ListGroup.Item>
               ))}

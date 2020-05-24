@@ -1,9 +1,4 @@
-import {
-  IProduct,
-  IPriceHistory,
-  numberOfRecords,
-  IQuantityHistory,
-} from "../interfaces/interfaces";
+import { IProduct, numberOfRecords, IHistory } from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
 
 // Returns list of IProduct from local storage
@@ -51,10 +46,7 @@ export const updateProps = (product: IProduct): IProduct | null => {
 };
 
 // Updates item price history, returns updated item or null if not found
-export const updatePrice = (
-  id: string,
-  price: IPriceHistory
-): IProduct | null => {
+export const updatePrice = (id: string, price: IHistory): IProduct | null => {
   let items: IProduct[] = getData();
   let item: IProduct | undefined = items.find((p) => p.id === id);
   if (isNullOrUndefined(item)) {
@@ -72,7 +64,7 @@ export const updatePrice = (
 // Updates item quantity history, returns updated item or null if not found
 export const updateQuantity = (
   id: string,
-  quantity: IQuantityHistory
+  quantity: IHistory
 ): IProduct | null => {
   let items: IProduct[] = getData();
   let item: IProduct | undefined = items.find((p) => p.id === id);

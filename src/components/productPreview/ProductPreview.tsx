@@ -4,8 +4,7 @@ import {
   IProduct,
   ProductType,
   ProductColor,
-  IPriceHistory,
-  IQuantityHistory,
+  IHistory,
 } from "../interfaces/interfaces";
 import { getItem } from "../localStorage/LocalStorage";
 import { currency, unit, numberOfRecords } from "../interfaces/interfaces";
@@ -58,8 +57,8 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                   <b>Active: </b> {item.active ? "active" : "not active"}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <b>Price: </b> {item.priceHistory[0].price} {currency}
-                  {item.priceHistory[0].price <= 0 ? (
+                  <b>Price: </b> {item.priceHistory[0].value} {currency}
+                  {item.priceHistory[0].value <= 0 ? (
                     <Badge variant="warning" className="ml-2">
                       Price inaccuracy
                     </Badge>
@@ -68,8 +67,8 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                   )}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <b>Quantity: </b> {item.quantityHistory[0].quantity} {unit}
-                  {item.quantityHistory[0].quantity === 0 ? (
+                  <b>Quantity: </b> {item.quantityHistory[0].value} {unit}
+                  {item.quantityHistory[0].value === 0 ? (
                     <Badge variant="warning" className="ml-2">
                       No in stock
                     </Badge>
@@ -89,9 +88,9 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                     </Card.Text>
                   </Card.Body>
                   <ListGroup variant="flush">
-                    {item.priceHistory.map((p: IPriceHistory) => (
+                    {item.priceHistory.map((p: IHistory) => (
                       <ListGroup.Item>
-                        {p.price} ({new Date(p.date).toLocaleString()})
+                        {p.value} ({new Date(p.date).toLocaleString()})
                       </ListGroup.Item>
                     ))}
                   </ListGroup>
@@ -105,7 +104,8 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                       .map((c) => new Date(c.date).toLocaleString())
                       .reverse()}
                     yAxisTitle="Price"
-                    data={item.priceHistory.map((c) => c.price).reverse()}
+                    yAxisUnits={currency}
+                    data={item.priceHistory.map((c) => c.value).reverse()}
                   />
                 </Card>
               </CardDeck>
@@ -120,9 +120,9 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                     </Card.Text>
                   </Card.Body>
                   <ListGroup variant="flush">
-                    {item.quantityHistory.map((p: IQuantityHistory) => (
+                    {item.quantityHistory.map((p: IHistory) => (
                       <ListGroup.Item>
-                        {p.quantity} ({new Date(p.date).toLocaleString()})
+                        {p.value} ({new Date(p.value).toLocaleString()})
                       </ListGroup.Item>
                     ))}
                   </ListGroup>
@@ -136,7 +136,8 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                       .map((c) => new Date(c.date).toLocaleString())
                       .reverse()}
                     yAxisTitle="Quantity"
-                    data={item.quantityHistory.map((c) => c.quantity).reverse()}
+                    yAxisUnits={unit}
+                    data={item.quantityHistory.map((c) => c.value).reverse()}
                   />
                 </Card>
               </CardDeck>

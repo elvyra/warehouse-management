@@ -18,17 +18,12 @@ export interface IProduct {
   weight: number;
   color: ProductColor;
   active: boolean;
-  priceHistory: IPriceHistory[];
-  quantityHistory: IQuantityHistory[];
+  priceHistory: IHistory[];
+  quantityHistory: IHistory[];
 }
 
-export interface IPriceHistory {
-  price: number;
-  date: number;
-}
-
-export interface IQuantityHistory {
-  quantity: number;
+export interface IHistory {
+  value: number;
   date: number;
 }
 
