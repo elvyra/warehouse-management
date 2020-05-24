@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { currency, unit, IProduct, IHistory } from "../interfaces/interfaces";
 import {
   getData,
@@ -10,6 +10,7 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
 import { Table } from "react-bootstrap";
+import { ToastContext } from "../toast/ToastsProvider";
 
 // Used for receiving Price and Quantity input data
 type InputData = {
@@ -19,6 +20,7 @@ type InputData = {
 
 const ProductsTable: React.FC = () => {
   const [items, setItems] = useState<IProduct[]>([]);
+  const { saveToast } = useContext(ToastContext);
 
   useEffect(() => {
     let list: IProduct[] = getData();
@@ -75,6 +77,10 @@ const ProductsTable: React.FC = () => {
       .dataset.id;
     if (!isNullOrUndefined(id)) {
       updateItems(toggleActive(id));
+      saveToast({
+        title: "Product updated successfully",
+        text: `Active prop toggled, product id: ${id}`,
+      });
     }
   };
 

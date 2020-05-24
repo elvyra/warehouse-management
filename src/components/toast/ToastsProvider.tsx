@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { IToast } from "../interfaces/interfaces";
 
-export const ToastContext = createContext();
+export const ToastContext = createContext<any>([]);
 
 type PropsType = {
   children: any;
@@ -19,6 +19,7 @@ const ToastsProvider: React.FC<PropsType> = ({ children }: PropsType) => {
       title: toast.title,
       text: toast.text,
     };
+    console.log(newToast);
     setToasts([...toasts, newToast]);
   };
 

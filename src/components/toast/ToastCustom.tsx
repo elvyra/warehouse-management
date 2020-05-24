@@ -4,7 +4,7 @@ import { delayToast } from "../interfaces/interfaces";
 import { IToast } from "../interfaces/interfaces";
 
 type PropsType = {
-  key: number;
+  key: number | undefined;
   toast: IToast;
 };
 

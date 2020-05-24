@@ -6,20 +6,23 @@ import ProducCreate from "../productCreate/ProductCreate";
 import ProductPreview from "../productPreview/ProductPreview";
 import ProductEdit from "../productEdit/ProductEdit";
 import { Container } from "react-bootstrap";
+import ToastsProvider from "../toast/ToastsProvider";
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Container>
-        <h1>Warehouse management</h1>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/products" component={ProductTable} />
-          <Route exact path="/products/create" component={ProducCreate} />
-          <Route path="/products/:id/edit" component={ProductEdit} />
-          <Route path="/products/:id" component={ProductPreview} />
-        </Switch>
-      </Container>
+      <ToastsProvider>
+        <Container>
+          <h1>Warehouse management</h1>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/products" component={ProductTable} />
+            <Route exact path="/products/create" component={ProducCreate} />
+            <Route path="/products/:id/edit" component={ProductEdit} />
+            <Route path="/products/:id" component={ProductPreview} />
+          </Switch>
+        </Container>
+      </ToastsProvider>
     </Router>
   );
 };
