@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Toast } from "react-bootstrap";
 import { delayToast } from "../interfaces/interfaces";
 import { IToast } from "../interfaces/interfaces";
+import { isNullOrUndefined } from "util";
 
 type PropsType = {
-  key: number | undefined;
   toast: IToast;
 };
 
-const ToastCustom: React.FC<PropsType> = ({ key, toast }: PropsType) => {
+const ToastCustom: React.FC<PropsType> = ({ toast }: PropsType) => {
   const [show, setShow] = useState(true);
 
   return (
@@ -21,9 +21,11 @@ const ToastCustom: React.FC<PropsType> = ({ key, toast }: PropsType) => {
         className="toast-success"
       >
         <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
           <strong className="mr-auto">{toast.title}</strong>
-          <small>11 mins ago</small>
+          <small>
+            {toast.subtitle}
+            {!isNullOrUndefined(toast.subtitle) ? toast.subtitle : ""}
+          </small>
         </Toast.Header>
         <Toast.Body>{toast.text}</Toast.Body>
       </Toast>

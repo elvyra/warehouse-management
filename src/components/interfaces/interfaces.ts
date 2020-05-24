@@ -11,7 +11,7 @@ export const color = "red";
 export const numberOfRecords = 5;
 
 // Toast (alert) show time
-export const delayToast = 50000;
+export const delayToast = 10000;
 
 export interface IProduct {
   id?: string;
@@ -50,5 +50,6 @@ export enum ProductColor {
 export interface IToast {
   id?: number;
   title: string;
+  subtitle?: string;
   text: string;
 }

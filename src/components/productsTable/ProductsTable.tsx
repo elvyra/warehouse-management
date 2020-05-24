@@ -59,7 +59,6 @@ const ProductsTable: React.FC = () => {
   // Deletes item from items list (useState hook)
   const deleteItem = (item: IProduct | null | undefined) => {
     if (!isNullOrUndefined(item)) {
-      console.log(item.id);
       let list: IProduct[] = items.slice();
       let itemInList = items.find((p) => p.id === item.id);
       if (!isNullOrUndefined(itemInList)) {
@@ -78,8 +77,9 @@ const ProductsTable: React.FC = () => {
     if (!isNullOrUndefined(id)) {
       updateItems(toggleActive(id));
       saveToast({
-        title: "Product updated successfully",
-        text: `Active prop toggled, product id: ${id}`,
+        title: "Product updated",
+        subtitle: `(Id: ${id})`,
+        text: `Property "active" toggled successfully`,
       });
     }
   };
@@ -93,6 +93,11 @@ const ProductsTable: React.FC = () => {
         date: Date.now(),
       };
       updateItems(updatePrice(inputData.id, price));
+      saveToast({
+        title: "Product updated",
+        subtitle: `(Id: ${inputData.id})`,
+        text: `Price updated successfully (${price.value} ${currency})`,
+      });
     }
   };
 
@@ -105,6 +110,11 @@ const ProductsTable: React.FC = () => {
         date: Date.now(),
       };
       updateItems(updateQuantity(inputData.id, quantity));
+      saveToast({
+        title: "Product updated",
+        subtitle: `(Id: ${inputData.id})`,
+        text: `Quantity updated successfully (${quantity.value} ${unit})`,
+      });
     }
   };
 
@@ -116,6 +126,11 @@ const ProductsTable: React.FC = () => {
       .dataset.id;
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
+      saveToast({
+        title: "Product deleted",
+        subtitle: `(Id: ${id})`,
+        text: `Product deleted successfully`,
+      });
     }
   };
 

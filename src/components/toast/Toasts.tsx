@@ -6,8 +6,6 @@ import { ToastContext } from "../toast/ToastsProvider";
 const Toasts: React.FC = () => {
   const { toasts } = useContext(ToastContext);
 
-  console.log(toasts);
-
   return (
     <div className="toast-top-right">
       {toasts.map((toast: IToast) => (
