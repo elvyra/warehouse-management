@@ -48,7 +48,7 @@ export enum ProductColor {
 }
 
 export interface IToast {
-  id: number;
+  id?: number;
   title: string;
   text: string;
 }
