@@ -8,10 +8,7 @@ type PropsType = {
 };
 
 const ToastsProvider: React.FC<PropsType> = ({ children }: PropsType) => {
-  const [toasts, setToasts] = useState<IToast[]>([
-    { id: 1, title: "post 1", text: "Quisque cursus, metus vitae pharetra" },
-    { id: 2, title: "post 2", text: "Quisque cursus, metus vitae pharetra" },
-  ]);
+  const [toasts, setToasts] = useState<IToast[]>([]);
 
   const saveToast = (toast: IToast) => {
     const newToast: IToast = {
