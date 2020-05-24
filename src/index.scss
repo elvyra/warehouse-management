@@ -17,5 +17,10 @@ $theme-colors: (
     right: 0;
     margin-top: 2rem;
     margin-right: 2rem;
+    z-index: 999;
+  }
+  &-success,
+  &-success > &-header {
+    background-color: theme-color-level("success", -11);
   }
 }
