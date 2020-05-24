@@ -5,3 +5,7 @@ $theme-colors: (
 );
 
 @import "~bootstrap/scss/bootstrap";
+
+.highlight {
+  background-color: theme-color-level("danger", -11);
+}

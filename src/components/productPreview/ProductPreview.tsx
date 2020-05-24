@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { NavLink, RouteComponentProps } from "react-router-dom";
-import {
-  IProduct,
-  ProductType,
-  ProductColor,
-  IPriceHistory,
-  IQuantityHistory,
-} from "../interfaces/interfaces";
+import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
 import { getItem } from "../localStorage/LocalStorage";
-import { currency, unit, numberOfRecords } from "../interfaces/interfaces";
+import { currency, unit } from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
-import Highchart from "./Highchart";
-import { Tab, Tabs, Card, CardDeck, ListGroup, Badge } from "react-bootstrap";
+import HistoryPreview from "./HistoryPreview";
+import { Tab, Tabs, ListGroup, Badge } from "react-bootstrap";
 
 interface MatchParams {
   id: string;
@@ -58,8 +52,8 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                   <b>Active: </b> {item.active ? "active" : "not active"}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <b>Price: </b> {item.priceHistory[0].price} {currency}
-                  {item.priceHistory[0].price <= 0 ? (
+                  <b>Price: </b> {item.priceHistory[0].value} {currency}
+                  {item.priceHistory[0].value <= 0 ? (
                     <Badge variant="warning" className="ml-2">
                       Price inaccuracy
                     </Badge>
@@ -68,8 +62,8 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
                   )}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <b>Quantity: </b> {item.quantityHistory[0].quantity} {unit}
-                  {item.quantityHistory[0].quantity === 0 ? (
+                  <b>Quantity: </b> {item.quantityHistory[0].value} {unit}
+                  {item.quantityHistory[0].value === 0 ? (
                     <Badge variant="warning" className="ml-2">
                       No in stock
                     </Badge>
@@ -80,66 +74,22 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
               </ListGroup>
             </Tab>
             <Tab eventKey="price" title="Price history">
-              <CardDeck className="mt-4 mb-4">
-                <Card style={{ flex: "1 1" }}>
-                  <Card.Body>
-                    <Card.Title>Price history</Card.Title>
-                    <Card.Text>
-                      Last {numberOfRecords} entries are stored in database.
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup variant="flush">
-                    {item.priceHistory.map((p: IPriceHistory) => (
-                      <ListGroup.Item>
-                        {p.price} ({new Date(p.date).toLocaleString()})
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
-                <Card style={{ flex: "2 1" }}>
-                  <Highchart
-                    title={"Price history"}
-                    subtitle={`Product name: ${item.name} (EAN: ${item.EAN})`}
-                    xAxisTitle="Date and time"
-                    xAxisCategories={item.priceHistory
-                      .map((c) => new Date(c.date).toLocaleString())
-                      .reverse()}
-                    yAxisTitle="Price"
-                    data={item.priceHistory.map((c) => c.price).reverse()}
-                  />
-                </Card>
-              </CardDeck>
+              <HistoryPreview
+                title="Price"
+                itemName={item.name}
+                itemEAN={item.EAN}
+                units={currency}
+                data={item.priceHistory}
+              />
             </Tab>
             <Tab eventKey="quantity" title="Quantity history">
-              <CardDeck className="mt-4 mb-4">
-                <Card style={{ flex: "1 1" }}>
-                  <Card.Body>
-                    <Card.Title>Quantity history</Card.Title>
-                    <Card.Text>
-                      Last {numberOfRecords} entries are stored in database.
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup variant="flush">
-                    {item.quantityHistory.map((p: IQuantityHistory) => (
-                      <ListGroup.Item>
-                        {p.quantity} ({new Date(p.date).toLocaleString()})
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card>
-                <Card style={{ flex: "2 1" }}>
-                  <Highchart
-                    title={"Quantity history"}
-                    subtitle={`Product name: ${item.name} (EAN: ${item.EAN})`}
-                    xAxisTitle="Date and time"
-                    xAxisCategories={item.quantityHistory
-                      .map((c) => new Date(c.date).toLocaleString())
-                      .reverse()}
-                    yAxisTitle="Quantity"
-                    data={item.quantityHistory.map((c) => c.quantity).reverse()}
-                  />
-                </Card>
-              </CardDeck>
+              <HistoryPreview
+                title="Quantity"
+                itemName={item.name}
+                itemEAN={item.EAN}
+                units={unit}
+                data={item.quantityHistory}
+              />
             </Tab>
           </Tabs>
           <NavLink to="/products">Back to list</NavLink>

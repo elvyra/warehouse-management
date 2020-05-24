@@ -14,15 +14,13 @@ export const CreateNewProduct = (
     active: ((target.active as unknown) as HTMLInputElement).checked,
     priceHistory: [
       {
-        price: Number(((target.price as unknown) as HTMLInputElement).value),
+        value: Number(((target.price as unknown) as HTMLInputElement).value),
         date: Date.now(),
       },
     ],
     quantityHistory: [
       {
-        quantity: Number(
-          ((target.quantity as unknown) as HTMLInputElement).value
-        ),
+        value: Number(((target.quantity as unknown) as HTMLInputElement).value),
         date: Date.now(),
       },
     ],

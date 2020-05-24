@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  currency,
-  unit,
-  IProduct,
-  IPriceHistory,
-  IQuantityHistory,
-} from "../interfaces/interfaces";
+import { currency, unit, IProduct, IHistory } from "../interfaces/interfaces";
 import {
   getData,
   toggleActive,
@@ -88,8 +82,8 @@ const ProductsTable: React.FC = () => {
   const handlePriceUpdate = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
       let inputData: InputData = getInputData(event);
-      let price: IPriceHistory = {
-        price: Number(inputData.value),
+      let price: IHistory = {
+        value: Number(inputData.value),
         date: Date.now(),
       };
       updateItems(updatePrice(inputData.id, price));
@@ -100,8 +94,8 @@ const ProductsTable: React.FC = () => {
   const handleQuantityUpdate = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
       let inputData: InputData = getInputData(event);
-      let quantity: IQuantityHistory = {
-        quantity: Number(inputData.value),
+      let quantity: IHistory = {
+        value: Number(inputData.value),
         date: Date.now(),
       };
       updateItems(updateQuantity(inputData.id, quantity));
