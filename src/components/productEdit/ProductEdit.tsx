@@ -26,7 +26,7 @@ import {
   CardDeck,
   Card,
 } from "react-bootstrap";
-import { ToastContext } from "../toasts/ToastsProvider";
+import AppContext from "../app/AppContext";
 
 interface MatchParams {
   id: string;
@@ -35,7 +35,7 @@ interface PropsType extends RouteComponentProps<MatchParams> {}
 
 const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
   const [item, setItem] = useState<IProduct | null>(null);
-  const { saveToast } = useContext(ToastContext);
+  const { saveToast } = useContext(AppContext);
 
   useEffect(() => {
     let product: IProduct | null | undefined = getItem(props.match.params.id);

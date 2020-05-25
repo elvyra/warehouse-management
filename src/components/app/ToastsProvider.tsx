@@ -1,7 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { useState } from "react";
+import AppContext from "./AppContext";
 import { IToast } from "../interfaces/interfaces";
-
-export const ToastContext = createContext<any>([]);
 
 type PropsType = {
   children: any;
@@ -23,9 +22,9 @@ const ToastsProvider: React.FC<PropsType> = ({
   };
 
   return (
-    <ToastContext.Provider value={{ toasts, saveToast }}>
+    <AppContext.Provider value={{ toasts, saveToast }}>
       {children}
-    </ToastContext.Provider>
+    </AppContext.Provider>
   );
 };
 

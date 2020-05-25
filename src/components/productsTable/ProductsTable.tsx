@@ -16,7 +16,7 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
 import { Table } from "react-bootstrap";
-import { ToastContext } from "../toasts/ToastsProvider";
+import AppContext from "../app/AppContext";
 
 // Used for receiving Price and Quantity input data
 type InputData = {
@@ -26,7 +26,7 @@ type InputData = {
 
 const ProductsTable: React.FC = () => {
   const [items, setItems] = useState<IProduct[]>([]);
-  const { saveToast } = useContext(ToastContext);
+  const { saveToast } = useContext(AppContext);
 
   useEffect(() => {
     let list: IProduct[] = getData();

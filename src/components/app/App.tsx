@@ -6,7 +6,7 @@ import ProducCreate from "../productCreate/ProductCreate";
 import ProductPreview from "../productPreview/ProductPreview";
 import ProductEdit from "../productEdit/ProductEdit";
 import { Container } from "react-bootstrap";
-import ToastsProvider from "../toasts/ToastsProvider";
+import ToastsProvider from "./ToastsProvider";
 import Toasts from "../toasts/Toasts";
 
 const App: React.FC = () => {
