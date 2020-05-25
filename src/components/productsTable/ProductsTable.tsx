@@ -77,9 +77,8 @@ const ProductsTable: React.FC = () => {
     if (!isNullOrUndefined(id)) {
       updateItems(toggleActive(id));
       saveToast({
-        title: "Product updated",
-        subtitle: `(Id: ${id})`,
-        text: `Property "active" toggled successfully`,
+        title: `Product (Product Id: ${id}) updated`,
+        text: `Property "active" toggled successfully `,
       });
     }
   };
@@ -94,9 +93,8 @@ const ProductsTable: React.FC = () => {
       };
       updateItems(updatePrice(inputData.id, price));
       saveToast({
-        title: "Product updated",
-        subtitle: `(Id: ${inputData.id})`,
-        text: `Price updated successfully (${price.value} ${currency})`,
+        title: `Product (Id: ${inputData.id}) updated`,
+        text: `Price updated successfully (${price.value} ${currency}) `,
       });
     }
   };
@@ -111,8 +109,7 @@ const ProductsTable: React.FC = () => {
       };
       updateItems(updateQuantity(inputData.id, quantity));
       saveToast({
-        title: "Product updated",
-        subtitle: `(Id: ${inputData.id})`,
+        title: `Product (Id: ${inputData.id}) updated`,
         text: `Quantity updated successfully (${quantity.value} ${unit})`,
       });
     }
@@ -127,8 +124,7 @@ const ProductsTable: React.FC = () => {
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
       saveToast({
-        title: "Product deleted",
-        subtitle: `(Id: ${id})`,
+        title: `Product (Id: ${id}) deleted`,
         text: `Product deleted successfully`,
       });
     }

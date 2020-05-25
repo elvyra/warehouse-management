@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import ProductForm from "../productForm/ProductForm";
 import { CreateNewProduct } from "../productForm/CreateProductFromFormData";
 import { createItem } from "../localStorage/LocalStorage";
 import { Col, Row, Button, Form } from "react-bootstrap";
+import { ToastContext } from "../toasts/ToastsProvider";
 
 const ProductCreate: React.FC = () => {
   const handleChangeActive = () => {};
+  const { saveToast } = useContext(ToastContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    createItem(CreateNewProduct(event));
+    let item = createItem(CreateNewProduct(event));
+    saveToast({
+      title: `Product created successfully`,
+      text: `New product Id : (Id: ${item.id})`,
+    });
     event.currentTarget.reset();
   };
 

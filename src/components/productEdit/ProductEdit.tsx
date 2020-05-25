@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
-import { IProduct, IHistory } from "../interfaces/interfaces";
+import { IProduct, IHistory, currency, unit } from "../interfaces/interfaces";
 import {
   getItem,
   updateProps,
@@ -20,6 +20,7 @@ import {
   CardDeck,
   Card,
 } from "react-bootstrap";
+import { ToastContext } from "../toasts/ToastsProvider";
 
 interface MatchParams {
   id: string;
@@ -28,6 +29,7 @@ interface PropsType extends RouteComponentProps<MatchParams> {}
 
 const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
   const [item, setItem] = useState<IProduct | null>(null);
+  const { saveToast } = useContext(ToastContext);
 
   useEffect(() => {
     let product: IProduct | null | undefined = getItem(props.match.params.id);
@@ -39,6 +41,10 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
   const handleChangeProps = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setItem(updateProps(CreateEditedProduct(event)));
+    saveToast({
+      title: `Product updated successfully`,
+      text: `Product properties updated`,
+    });
   };
 
   const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -51,6 +57,10 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     };
     if (!isNullOrUndefined(id)) {
       setItem(updatePrice(id, price));
+      saveToast({
+        title: `Product price updated successfully`,
+        text: `Current price ${price.value} ${currency}`,
+      });
     }
   };
 
@@ -66,6 +76,10 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     };
     if (!isNullOrUndefined(id)) {
       setItem(updateQuantity(id, quantity));
+      saveToast({
+        title: `Product quantity updated successfully`,
+        text: `Current stock: ${quantity.value} ${unit}`,
+      });
     }
   };
 
@@ -124,7 +138,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
                 <Form onSubmit={handleUpdatePrice}>
                   <Form.Group as={Row} className="w-100">
                     <Form.Label column md="3">
-                      Current
+                      Current ({currency})
                     </Form.Label>
                     <Col md="7">
                       <Form.Control
@@ -144,8 +158,8 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
             <ListGroup variant="flush">
               {item.priceHistory.map((c: IHistory) => (
                 <ListGroup.Item key={c.date}>
-                  Price: {c.value} (Updated: {new Date(c.date).toLocaleString()}
-                  )
+                  Price: {c.value} {currency} (Updated:{" "}
+                  {new Date(c.date).toLocaleString()})
                 </ListGroup.Item>
               ))}
             </ListGroup>
@@ -158,7 +172,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
                 <Form onSubmit={handleUpdateQuantity}>
                   <Form.Group as={Row} className="w-100">
                     <Form.Label column md="3">
-                      Current
+                      Current ({unit})
                     </Form.Label>
                     <Col md="7">
                       <Form.Control
@@ -178,7 +192,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
             <ListGroup variant="flush">
               {item.quantityHistory.map((c: IHistory) => (
                 <ListGroup.Item key={c.date}>
-                  Quantity: {c.value} (Updated:{" "}
+                  Quantity: {c.value} {unit} (Updated:{" "}
                   {new Date(c.date).toLocaleString()})
                 </ListGroup.Item>
               ))}

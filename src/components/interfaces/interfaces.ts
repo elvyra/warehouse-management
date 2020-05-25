@@ -50,6 +50,5 @@ export enum ProductColor {
 export interface IToast {
   id?: number;
   title: string;
-  subtitle?: string;
   text: string;
 }

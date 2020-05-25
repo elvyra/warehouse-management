@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Toast } from "react-bootstrap";
 import { delayToast } from "../interfaces/interfaces";
 import { IToast } from "../interfaces/interfaces";
-import { isNullOrUndefined } from "util";
 
 type PropsType = {
   toast: IToast;
@@ -22,10 +21,6 @@ const ToastCustom: React.FC<PropsType> = ({ toast }: PropsType) => {
       >
         <Toast.Header>
           <strong className="mr-auto">{toast.title}</strong>
-          <small>
-            {toast.subtitle}
-            {!isNullOrUndefined(toast.subtitle) ? toast.subtitle : ""}
-          </small>
         </Toast.Header>
         <Toast.Body>{toast.text}</Toast.Body>
       </Toast>
