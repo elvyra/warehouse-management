@@ -3,15 +3,12 @@ import {
   currency,
   unit,
   IProduct,
-  IHistory,
   ToastType,
   ToastTemplate,
 } from "../interfaces/interfaces";
 import {
   getData,
   toggleActive,
-  updatePrice,
-  updateQuantity,
   deteleFromList,
 } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
@@ -79,6 +76,7 @@ const ProductsTable: React.FC = () => {
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
       saveToast(ToastType.danger, ToastTemplate.deleted, id);
+      console.log("as cia", id);
     }
   };
 
