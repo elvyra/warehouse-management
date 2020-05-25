@@ -1,22 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
+import {
+  IProduct,
+  ProductType,
+  ProductColor,
+  currency,
+} from "../interfaces/interfaces";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
 
 type PropsType = {
   key?: string;
   item: IProduct;
   handleActiveChange: any;
-  handlePriceUpdate: any;
-  handleQuantityUpdate: any;
   handleDelete: any;
 };
 
 const ProductRow: React.FC<PropsType> = ({
   item,
   handleActiveChange,
-  handlePriceUpdate,
-  handleQuantityUpdate,
   handleDelete,
 }: PropsType) => {
   return (
@@ -36,34 +37,8 @@ const ProductRow: React.FC<PropsType> = ({
           onChange={handleActiveChange}
         />
       </td>
-      <td>
-        <Form.Control
-          type="number"
-          name="price"
-          min="0"
-          data-id={item.id}
-          defaultValue={item.priceHistory[0].value}
-          onKeyUp={handlePriceUpdate}
-          className={
-            item.priceHistory[0].value <= 0 ? "border-danger text-danger" : ""
-          }
-        />
-      </td>
-      <td>
-        <Form.Control
-          type="number"
-          name="quantity"
-          min="0"
-          data-id={item.id}
-          defaultValue={item.quantityHistory[0].value}
-          onKeyUp={handleQuantityUpdate}
-          className={
-            item.quantityHistory[0].value <= 0
-              ? "border-danger text-danger"
-              : ""
-          }
-        />
-      </td>
+      <td>{item.priceHistory[0].value}</td>
+      <td>{item.quantityHistory[0].value}</td>
       <td>
         <ButtonGroup>
           <NavLink

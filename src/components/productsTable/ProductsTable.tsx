@@ -34,23 +34,6 @@ const ProductsTable: React.FC = () => {
     if (list.length > 0) setItems(list);
   }, []);
 
-  // Gets data from input data-id attribute and value and returns as tuple InputData = { id, value }
-
-  const getInputData = (event: React.KeyboardEvent): InputData => {
-    let id:
-      | string
-      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
-      .dataset.id;
-    let value:
-      | string
-      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
-      .value;
-    return {
-      id: isNullOrUndefined(id) ? "" : id,
-      value: isNullOrUndefined(value) ? "" : value,
-    };
-  };
-
   // Updates items list (useState hook) with new item info
   const updateItems = (item: IProduct | null | undefined) => {
     if (!isNullOrUndefined(item)) {
@@ -84,42 +67,6 @@ const ProductsTable: React.FC = () => {
     if (!isNullOrUndefined(id)) {
       updateItems(toggleActive(id));
       saveToast(ToastType.success, ToastTemplate.updated, id);
-    }
-  };
-
-  // Handle item price update
-  const handlePriceUpdate = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      let inputData: InputData = getInputData(event);
-      let price: IHistory = {
-        value: Number(inputData.value),
-        date: Date.now(),
-      };
-      updateItems(updatePrice(inputData.id, price));
-      saveToast(
-        ToastType.success,
-        ToastTemplate.updated,
-        inputData.id,
-        `Current price: ${price.value} ${currency}`
-      );
-    }
-  };
-
-  // Handle item quantity update
-  const handleQuantityUpdate = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      let inputData: InputData = getInputData(event);
-      let quantity: IHistory = {
-        value: Number(inputData.value),
-        date: Date.now(),
-      };
-      updateItems(updateQuantity(inputData.id, quantity));
-      saveToast(
-        ToastType.success,
-        ToastTemplate.updated,
-        inputData.id,
-        `Current quantity: ${quantity.value} ${unit}`
-      );
     }
   };
 
@@ -163,8 +110,6 @@ const ProductsTable: React.FC = () => {
                   key={item.id}
                   item={item}
                   handleActiveChange={handleActiveChange}
-                  handlePriceUpdate={handlePriceUpdate}
-                  handleQuantityUpdate={handleQuantityUpdate}
                   handleDelete={handleDelete}
                 />
               ))}

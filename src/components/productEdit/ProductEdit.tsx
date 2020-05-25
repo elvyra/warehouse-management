@@ -113,6 +113,23 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       }
     }
   };
+  /*
+  const handlePriceUpdate = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      let inputData: InputData = getInputData(event);
+      let price: IHistory = {
+        value: Number(inputData.value),
+        date: Date.now(),
+      };
+      updateItems(updatePrice(inputData.id, price));
+      saveToast(
+        ToastType.success,
+        ToastTemplate.updated,
+        inputData.id,
+        `Current price: ${price.value} ${currency}`
+      );
+    }
+  }; */
 
   return (
     <>
