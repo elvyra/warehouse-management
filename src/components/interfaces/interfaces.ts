@@ -13,6 +13,15 @@ export const numberOfRecords = 5;
 // Toast (alert) show time
 export const delayToast = 10000;
 
+// Time snapshot fot Toasts
+export const currentTime = (): string =>
+  new Date(Date.now()).toLocaleTimeString([], {
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
 export interface IProduct {
   id?: string;
   name: string;
@@ -53,6 +62,7 @@ export interface IToast {
   template: ToastTemplate;
   title: string;
   text: string;
+  time?: string;
 }
 
 export enum ToastType {

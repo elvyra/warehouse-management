@@ -4,6 +4,7 @@ import {
   IToast,
   ToastType,
   ToastTemplate,
+  currentTime,
 } from "../components/interfaces/interfaces";
 
 type PropsType = {
@@ -27,6 +28,7 @@ const ToastsProvider: React.FC<PropsType> = ({
       template: template,
       title: id,
       text: text ? text : "",
+      time: currentTime(),
     };
 
     setToasts([...toasts, newToast]);
