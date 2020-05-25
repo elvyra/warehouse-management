@@ -13,14 +13,8 @@ import {
 } from "../localStorage/LocalStorage";
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
-import { Table } from "react-bootstrap";
+import { Table, Card } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
-
-// Used for receiving Price and Quantity input data
-type InputData = {
-  id: string;
-  value: string;
-};
 
 const ProductsTable: React.FC = () => {
   const [items, setItems] = useState<IProduct[]>([]);
@@ -47,7 +41,9 @@ const ProductsTable: React.FC = () => {
   const deleteItem = (item: IProduct | null | undefined) => {
     if (!isNullOrUndefined(item)) {
       let list: IProduct[] = items.slice();
-      let itemInList = items.find((p) => p.id === item.id);
+      let itemInList: IProduct | undefined = items.find(
+        (p) => p.id === item.id
+      );
       if (!isNullOrUndefined(itemInList)) {
         list.splice(items.indexOf(itemInList), 1);
         setItems(list);
@@ -76,44 +72,45 @@ const ProductsTable: React.FC = () => {
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
       saveToast(ToastType.danger, ToastTemplate.deleted, id);
-      console.log("as cia", id);
     }
   };
 
   return (
     <>
-      {items.length === 0 ? (
+      {items.length <= 0 ? (
         <p>No products found</p>
       ) : (
-        <>
-          <h3>Products Table</h3>
-          <Table hover responsive>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>EAN</th>
-                <th>Type</th>
-                <th>Weight</th>
-                <th>Color</th>
-                <th>Active</th>
-                <th>Price, {currency}</th>
-                <th>Quantity, {unit}</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <ProductRow
-                  key={item.id}
-                  item={item}
-                  handleActiveChange={handleActiveChange}
-                  handleDelete={handleDelete}
-                />
-              ))}
-            </tbody>
-          </Table>
-        </>
+        <Card>
+          <Card.Body>
+            <Card.Title>Products List</Card.Title>
+            <Table hover responsive>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>EAN</th>
+                  <th>Type</th>
+                  <th>Weight</th>
+                  <th>Color</th>
+                  <th>Active</th>
+                  <th>Price, {currency}</th>
+                  <th>Quantity, {unit}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <ProductRow
+                    key={item.id}
+                    item={item}
+                    handleActiveChange={handleActiveChange}
+                    handleDelete={handleDelete}
+                  />
+                ))}
+              </tbody>
+            </Table>
+          </Card.Body>
+        </Card>
       )}
     </>
   );
