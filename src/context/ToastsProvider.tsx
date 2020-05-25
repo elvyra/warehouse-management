@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AppContext from "./AppContext";
-import { IToast } from "../interfaces/interfaces";
+import AppContext from "./ToastsContext";
+import { IToast } from "../components/interfaces/interfaces";
 
 type PropsType = {
   children: any;

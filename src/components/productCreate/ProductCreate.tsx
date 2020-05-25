@@ -4,12 +4,12 @@ import ProductForm from "../productForm/ProductForm";
 import { CreateNewProduct } from "../productForm/CreateProductFromFormData";
 import { createItem } from "../localStorage/LocalStorage";
 import { Col, Row, Button, Form } from "react-bootstrap";
-import AppContext from "../app/AppContext";
+import ToastsContext from "../../context/ToastsContext";
 import { ToastType } from "../interfaces/interfaces";
 
 const ProductCreate: React.FC = () => {
   const handleChangeActive = () => {};
-  const { saveToast } = useContext(AppContext);
+  const { saveToast } = useContext(ToastsContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();

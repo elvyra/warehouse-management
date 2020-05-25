@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import Toast from "./ToastCustom";
 import { IToast } from "../interfaces/interfaces";
-import AppContext from "../app/AppContext";
+import ToastsContext from "../../context/ToastsContext";
 
 const Toasts: React.FC = (): JSX.Element => {
-  const { toasts } = useContext<{ toasts: IToast[] }>(AppContext);
+  const { toasts } = useContext<{ toasts: IToast[] }>(ToastsContext);
 
   return (
     <div className="toast-top-right">
