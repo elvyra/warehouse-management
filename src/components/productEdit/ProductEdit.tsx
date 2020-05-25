@@ -64,11 +64,19 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     };
     if (!isNullOrUndefined(id)) {
       setItem(updatePrice(id, price));
-      saveToast({
-        title: `Product price updated successfully`,
-        type: ToastType.success,
-        text: `Current price ${price.value} ${currency}`,
-      });
+      if (price.value > 0) {
+        saveToast({
+          title: `Product price updated successfully`,
+          type: ToastType.success,
+          text: `Current price ${price.value} ${currency}`,
+        });
+      } else {
+        saveToast({
+          title: `Product price updated successfully`,
+          type: ToastType.warning,
+          text: `Current price ${price.value} ${currency}`,
+        });
+      }
     }
   };
 
@@ -84,11 +92,19 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     };
     if (!isNullOrUndefined(id)) {
       setItem(updateQuantity(id, quantity));
-      saveToast({
-        title: `Product quantity updated successfully`,
-        type: ToastType.success,
-        text: `Current stock: ${quantity.value} ${unit}`,
-      });
+      if (quantity.value > 0) {
+        saveToast({
+          title: `Product quantity updated successfully`,
+          type: ToastType.success,
+          text: `Current stock: ${quantity.value} ${unit}`,
+        });
+      } else {
+        saveToast({
+          title: `Product quantity updated successfully`,
+          type: ToastType.warning,
+          text: `Current stock: ${quantity.value} ${unit}`,
+        });
+      }
     }
   };
 

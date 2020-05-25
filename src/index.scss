@@ -28,4 +28,9 @@ $theme-colors: (
   &-danger > &-header {
     background-color: theme-color-level("danger", -11);
   }
+
+  &-warning,
+  &-warning > &-header {
+    background-color: theme-color-level("warning", -11);
+  }
 }

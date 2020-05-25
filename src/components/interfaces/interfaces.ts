@@ -57,4 +57,5 @@ export interface IToast {
 export enum ToastType {
   "success" = 0,
   "danger" = 1,
+  "warning" = 2,
 }

@@ -14,11 +14,19 @@ const ProductCreate: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     let item = createItem(CreateNewProduct(event));
-    saveToast({
-      title: `Product created successfully`,
-      type: ToastType.success,
-      text: `New product Id : (Id: ${item.id})`,
-    });
+    if (item.priceHistory[0].value > 0 && item.quantityHistory[0].value > 0) {
+      saveToast({
+        title: `Product created successfully`,
+        type: ToastType.success,
+        text: `New product Id : (Id: ${item.id})`,
+      });
+    } else {
+      saveToast({
+        title: `Product created successfully`,
+        type: ToastType.warning,
+        text: `New product Id : (Id: ${item.id}). Warning! Price or/and stock info might be incorrect!`,
+      });
+    }
     event.currentTarget.reset();
   };
 
