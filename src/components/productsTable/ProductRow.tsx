@@ -1,22 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
-import { Button, ButtonGroup, Form } from "react-bootstrap";
+import {
+  IProduct,
+  ProductType,
+  ProductColor,
+  unit,
+} from "../interfaces/interfaces";
+import { ButtonGroup, Form } from "react-bootstrap";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 
 type PropsType = {
   key?: string;
   item: IProduct;
   handleActiveChange: any;
-  handlePriceUpdate: any;
-  handleQuantityUpdate: any;
   handleDelete: any;
 };
 
 const ProductRow: React.FC<PropsType> = ({
   item,
   handleActiveChange,
-  handlePriceUpdate,
-  handleQuantityUpdate,
   handleDelete,
 }: PropsType) => {
   return (
@@ -36,34 +38,8 @@ const ProductRow: React.FC<PropsType> = ({
           onChange={handleActiveChange}
         />
       </td>
-      <td>
-        <Form.Control
-          type="number"
-          name="price"
-          min="0"
-          data-id={item.id}
-          defaultValue={item.priceHistory[0].value}
-          onKeyUp={handlePriceUpdate}
-          className={
-            item.priceHistory[0].value <= 0 ? "border-danger text-danger" : ""
-          }
-        />
-      </td>
-      <td>
-        <Form.Control
-          type="number"
-          name="quantity"
-          min="0"
-          data-id={item.id}
-          defaultValue={item.quantityHistory[0].value}
-          onKeyUp={handleQuantityUpdate}
-          className={
-            item.quantityHistory[0].value <= 0
-              ? "border-danger text-danger"
-              : ""
-          }
-        />
-      </td>
+      <td>{item.priceHistory[0].value}</td>
+      <td>{item.quantityHistory[0].value}</td>
       <td>
         <ButtonGroup>
           <NavLink
@@ -78,9 +54,13 @@ const ProductRow: React.FC<PropsType> = ({
           >
             Edit
           </NavLink>
-          <Button variant="danger" data-id={item.id} onClick={handleDelete}>
-            Delete
-          </Button>
+          <ConfirmModal
+            id={item.id ? item.id : ""}
+            title={`Deleting product "${item.name}"`}
+            text={`Product Id: ${item.id}, in stock ${item.quantityHistory[0].value} ${unit}. Are you sure?`}
+            action={handleDelete}
+            actionTitle="Delete"
+          />
         </ButtonGroup>
       </td>
     </tr>
