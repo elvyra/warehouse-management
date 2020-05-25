@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import {
   IProduct,
@@ -6,7 +6,8 @@ import {
   ProductColor,
   unit,
 } from "../interfaces/interfaces";
-import { Button, ButtonGroup, Form, Modal, ListGroup } from "react-bootstrap";
+import { ButtonGroup, Form } from "react-bootstrap";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 
 type PropsType = {
   key?: string;
@@ -20,11 +21,6 @@ const ProductRow: React.FC<PropsType> = ({
   handleActiveChange,
   handleDelete,
 }: PropsType) => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   return (
     <tr className={item.quantityHistory[0].value <= 0 ? "highlight" : ""}>
       <td>{item.id}</td>
@@ -58,40 +54,12 @@ const ProductRow: React.FC<PropsType> = ({
           >
             Edit
           </NavLink>
-          <Button variant="danger" data-id={item.id} onClick={handleShow}>
-            Delete
-          </Button>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>Product will be deleted</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Woohoo, you're reading this text in a modal!
-              {item.id} {item.name} {item.EAN} {item.quantityHistory[0].value}
-              <ListGroup className="mt-4 mb-4">
-                <ListGroup.Item>
-                  <b>Id: </b> {item.id}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Name: </b> {item.name}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>EAN: </b> {item.EAN}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>In stock: </b> {item.quantityHistory[0].value} {unit}
-                </ListGroup.Item>
-              </ListGroup>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button variant="danger" data-id={item.id} onClick={handleDelete}>
-                Delete
-              </Button>
-            </Modal.Footer>
-          </Modal>
+          <ConfirmModal
+            id={item.id ? item.id : ""}
+            title={`Deleting product "${item.name}"`}
+            text={`Product Id: ${item.id}, in stock ${item.quantityHistory[0].value} ${unit}. Are you sure?`}
+            action={handleDelete}
+          />
         </ButtonGroup>
       </td>
     </tr>
