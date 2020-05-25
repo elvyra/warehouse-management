@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import ToastCustom from "./ToastCustom";
+import Toast from "./ToastCustom";
 import { IToast } from "../interfaces/interfaces";
 import { ToastContext } from "./ToastsProvider";
 
-const Toasts: React.FC = () => {
-  const { toasts } = useContext(ToastContext);
+const Toasts: React.FC = (): JSX.Element => {
+  const { toasts } = useContext<{ toasts: IToast[] }>(ToastContext);
 
   return (
     <div className="toast-top-right">
       {toasts.map((toast: IToast) => (
-        <ToastCustom key={toast.id} toast={toast} />
+        <Toast key={toast.id} toast={toast} />
       ))}
     </div>
   );

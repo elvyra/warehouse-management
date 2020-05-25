@@ -6,8 +6,10 @@ type PropsType = {
   toast: IToast;
 };
 
-const ToastCustom: React.FC<PropsType> = ({ toast }: PropsType) => {
-  const [show, setShow] = useState(true);
+const ToastCustom: React.FC<PropsType> = ({
+  toast,
+}: PropsType): JSX.Element => {
+  const [show, setShow] = useState<boolean>(true);
 
   return (
     <Toast
