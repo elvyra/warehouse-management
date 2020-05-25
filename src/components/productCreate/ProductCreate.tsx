@@ -5,7 +5,7 @@ import { CreateNewProduct } from "../productForm/CreateProductFromFormData";
 import { createItem } from "../localStorage/LocalStorage";
 import { Col, Row, Button, Form } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
-import { ToastType } from "../interfaces/interfaces";
+import { ToastType, ToastTemplate } from "../interfaces/interfaces";
 
 const ProductCreate: React.FC = () => {
   const handleChangeActive = () => {};
@@ -15,17 +15,14 @@ const ProductCreate: React.FC = () => {
     event.preventDefault();
     let item = createItem(CreateNewProduct(event));
     if (item.priceHistory[0].value > 0 && item.quantityHistory[0].value > 0) {
-      saveToast({
-        title: `Product created successfully`,
-        type: ToastType.success,
-        text: `New product Id : (Id: ${item.id})`,
-      });
+      saveToast(ToastType.success, ToastTemplate.created, item.id);
     } else {
-      saveToast({
-        title: `Product created successfully`,
-        type: ToastType.warning,
-        text: `New product Id : (Id: ${item.id}). Warning! Price or/and stock info might be incorrect!`,
-      });
+      saveToast(
+        ToastType.warning,
+        ToastTemplate.created,
+        item.id,
+        "Warning! Price or/and stock info might be incorrect!"
+      );
     }
     event.currentTarget.reset();
   };

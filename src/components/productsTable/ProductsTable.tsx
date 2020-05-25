@@ -5,6 +5,7 @@ import {
   IProduct,
   IHistory,
   ToastType,
+  ToastTemplate,
 } from "../interfaces/interfaces";
 import {
   getData,
@@ -82,11 +83,7 @@ const ProductsTable: React.FC = () => {
       .dataset.id;
     if (!isNullOrUndefined(id)) {
       updateItems(toggleActive(id));
-      saveToast({
-        title: `Product (Product Id: ${id}) updated`,
-        type: ToastType.success,
-        text: `Property "active" toggled successfully `,
-      });
+      saveToast(ToastType.success, ToastTemplate.updated, id);
     }
   };
 
@@ -99,11 +96,12 @@ const ProductsTable: React.FC = () => {
         date: Date.now(),
       };
       updateItems(updatePrice(inputData.id, price));
-      saveToast({
-        title: `Product (Id: ${inputData.id}) updated`,
-        type: ToastType.success,
-        text: `Price updated successfully (${price.value} ${currency}) `,
-      });
+      saveToast(
+        ToastType.success,
+        ToastTemplate.updated,
+        inputData.id,
+        `Current price: ${price.value} ${currency}`
+      );
     }
   };
 
@@ -116,11 +114,12 @@ const ProductsTable: React.FC = () => {
         date: Date.now(),
       };
       updateItems(updateQuantity(inputData.id, quantity));
-      saveToast({
-        title: `Product (Id: ${inputData.id}) updated`,
-        type: ToastType.success,
-        text: `Quantity updated successfully (${quantity.value} ${unit})`,
-      });
+      saveToast(
+        ToastType.success,
+        ToastTemplate.updated,
+        inputData.id,
+        `Current quantity: ${quantity.value} ${unit}`
+      );
     }
   };
 
@@ -132,11 +131,7 @@ const ProductsTable: React.FC = () => {
       .dataset.id;
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
-      saveToast({
-        title: `Product (Id: ${id}) deleted`,
-        type: ToastType.danger,
-        text: `Product deleted successfully`,
-      });
+      saveToast(ToastType.danger, ToastTemplate.deleted, id);
     }
   };
 

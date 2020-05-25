@@ -7,6 +7,7 @@ import {
   currency,
   unit,
   ToastType,
+  ToastTemplate,
 } from "../interfaces/interfaces";
 import {
   getItem,
@@ -47,11 +48,12 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
   const handleChangeProps = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setItem(updateProps(CreateEditedProduct(event)));
-    saveToast({
-      title: `Product updated successfully`,
-      type: ToastType.success,
-      text: `Product properties updated`,
-    });
+    saveToast(
+      ToastType.success,
+      ToastTemplate.updated,
+      "id misssing",
+      "Product properties updated"
+    );
   };
 
   const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -65,17 +67,19 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     if (!isNullOrUndefined(id)) {
       setItem(updatePrice(id, price));
       if (price.value > 0) {
-        saveToast({
-          title: `Product price updated successfully`,
-          type: ToastType.success,
-          text: `Current price ${price.value} ${currency}`,
-        });
+        saveToast(
+          ToastType.success,
+          ToastTemplate.updated,
+          id,
+          `Current price ${price.value} ${currency}`
+        );
       } else {
-        saveToast({
-          title: `Product price updated successfully`,
-          type: ToastType.warning,
-          text: `Current price ${price.value} ${currency}`,
-        });
+        saveToast(
+          ToastType.warning,
+          ToastTemplate.updated,
+          id,
+          `Current price ${price.value} ${currency}`
+        );
       }
     }
   };
@@ -93,17 +97,19 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     if (!isNullOrUndefined(id)) {
       setItem(updateQuantity(id, quantity));
       if (quantity.value > 0) {
-        saveToast({
-          title: `Product quantity updated successfully`,
-          type: ToastType.success,
-          text: `Current stock: ${quantity.value} ${unit}`,
-        });
+        saveToast(
+          ToastType.success,
+          ToastTemplate.updated,
+          id,
+          `Current stock: ${quantity.value} ${unit}`
+        );
       } else {
-        saveToast({
-          title: `Product quantity updated successfully`,
-          type: ToastType.warning,
-          text: `Current stock: ${quantity.value} ${unit}`,
-        });
+        saveToast(
+          ToastType.warning,
+          ToastTemplate.updated,
+          id,
+          `Current stock: ${quantity.value} ${unit}`
+        );
       }
     }
   };

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import AppContext from "./ToastsContext";
-import { IToast } from "../components/interfaces/interfaces";
+import {
+  IToast,
+  ToastType,
+  ToastTemplate,
+} from "../components/interfaces/interfaces";
 
 type PropsType = {
   children: any;
@@ -11,13 +15,20 @@ const ToastsProvider: React.FC<PropsType> = ({
 }: PropsType): JSX.Element => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
-  const saveToast = (toast: IToast): void => {
+  const saveToast = (
+    type: ToastType,
+    template: ToastTemplate,
+    id: string,
+    text?: string
+  ): void => {
     const newToast: IToast = {
       id: Math.random(), // for testing only
-      type: toast.type,
-      title: toast.title,
-      text: toast.text,
+      type: type,
+      template: template,
+      title: id,
+      text: text ? text : "",
     };
+
     setToasts([...toasts, newToast]);
   };
 

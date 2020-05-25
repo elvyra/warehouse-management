@@ -11,6 +11,8 @@ const ToastCustom: React.FC<PropsType> = ({
 }: PropsType): JSX.Element => {
   const [show, setShow] = useState<boolean>(true);
 
+  console.log(toast);
+
   return (
     <Toast
       show={show}
@@ -20,7 +22,7 @@ const ToastCustom: React.FC<PropsType> = ({
       className={`toast-${ToastType[toast.type]}`}
     >
       <Toast.Header>
-        <strong className="mr-auto">{toast.title}</strong>
+        <strong className="mr-auto">Product Id: {toast.title}</strong>
       </Toast.Header>
       <Toast.Body>{toast.text}</Toast.Body>
     </Toast>
