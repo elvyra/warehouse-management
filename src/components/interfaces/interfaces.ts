@@ -10,6 +10,13 @@ export const color = "red";
 // Number of max price and quantity history records
 export const numberOfRecords = 5;
 
+// Toast (alert) show time
+export const delayToast = 10000;
+
+// Time snapshot fot Toasts
+export const currentTime = (): string =>
+  new Date(Date.now()).toLocaleTimeString();
+
 export interface IProduct {
   id?: string;
   name: string;
@@ -42,4 +49,25 @@ export enum ProductColor {
   Beech = 2,
   Pine = 3,
   "Cherry Tree" = 4,
+}
+
+export interface IToast {
+  id?: number;
+  type: ToastType;
+  template: ToastTemplate;
+  title: string;
+  text: string;
+  time?: string;
+}
+
+export enum ToastType {
+  "success" = 0,
+  "danger" = 1,
+  "warning" = 2,
+}
+
+export enum ToastTemplate {
+  "created" = 0,
+  "updated" = 1,
+  "deleted" = 2,
 }

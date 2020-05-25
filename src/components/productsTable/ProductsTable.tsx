@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { currency, unit, IProduct, IHistory } from "../interfaces/interfaces";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  currency,
+  unit,
+  IProduct,
+  IHistory,
+  ToastType,
+  ToastTemplate,
+} from "../interfaces/interfaces";
 import {
   getData,
   toggleActive,
@@ -10,6 +17,7 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
 import { Table } from "react-bootstrap";
+import ToastsContext from "../../context/ToastsContext";
 
 // Used for receiving Price and Quantity input data
 type InputData = {
@@ -19,6 +27,7 @@ type InputData = {
 
 const ProductsTable: React.FC = () => {
   const [items, setItems] = useState<IProduct[]>([]);
+  const { saveToast } = useContext(ToastsContext);
 
   useEffect(() => {
     let list: IProduct[] = getData();
@@ -57,7 +66,6 @@ const ProductsTable: React.FC = () => {
   // Deletes item from items list (useState hook)
   const deleteItem = (item: IProduct | null | undefined) => {
     if (!isNullOrUndefined(item)) {
-      console.log(item.id);
       let list: IProduct[] = items.slice();
       let itemInList = items.find((p) => p.id === item.id);
       if (!isNullOrUndefined(itemInList)) {
@@ -75,6 +83,7 @@ const ProductsTable: React.FC = () => {
       .dataset.id;
     if (!isNullOrUndefined(id)) {
       updateItems(toggleActive(id));
+      saveToast(ToastType.success, ToastTemplate.updated, id);
     }
   };
 
@@ -87,6 +96,12 @@ const ProductsTable: React.FC = () => {
         date: Date.now(),
       };
       updateItems(updatePrice(inputData.id, price));
+      saveToast(
+        ToastType.success,
+        ToastTemplate.updated,
+        inputData.id,
+        `Current price: ${price.value} ${currency}`
+      );
     }
   };
 
@@ -99,6 +114,12 @@ const ProductsTable: React.FC = () => {
         date: Date.now(),
       };
       updateItems(updateQuantity(inputData.id, quantity));
+      saveToast(
+        ToastType.success,
+        ToastTemplate.updated,
+        inputData.id,
+        `Current quantity: ${quantity.value} ${unit}`
+      );
     }
   };
 
@@ -110,6 +131,7 @@ const ProductsTable: React.FC = () => {
       .dataset.id;
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
+      saveToast(ToastType.danger, ToastTemplate.deleted, id);
     }
   };
 

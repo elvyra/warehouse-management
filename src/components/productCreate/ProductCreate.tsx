@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import ProductForm from "../productForm/ProductForm";
 import { CreateNewProduct } from "../productForm/CreateProductFromFormData";
 import { createItem } from "../localStorage/LocalStorage";
 import { Col, Row, Button, Form } from "react-bootstrap";
+import ToastsContext from "../../context/ToastsContext";
+import { ToastType, ToastTemplate } from "../interfaces/interfaces";
 
 const ProductCreate: React.FC = () => {
   const handleChangeActive = () => {};
+  const { saveToast } = useContext(ToastsContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    createItem(CreateNewProduct(event));
+    let item = createItem(CreateNewProduct(event));
+    if (item.priceHistory[0].value > 0 && item.quantityHistory[0].value > 0) {
+      saveToast(ToastType.success, ToastTemplate.created, item.id);
+    } else {
+      saveToast(
+        ToastType.warning,
+        ToastTemplate.created,
+        item.id,
+        "Warning! Price or/and stock info might be incorrect!"
+      );
+    }
     event.currentTarget.reset();
   };
 
