@@ -7,17 +7,18 @@ type PropsType = {
   children: any;
 };
 
-const ToastsProvider: React.FC<PropsType> = ({ children }: PropsType) => {
+const ToastsProvider: React.FC<PropsType> = ({
+  children,
+}: PropsType): JSX.Element => {
   const [toasts, setToasts] = useState<IToast[]>([]);
 
-  const saveToast = (toast: IToast) => {
+  const saveToast = (toast: IToast): void => {
     const newToast: IToast = {
       id: Math.random(), // for testing only
       type: toast.type,
       title: toast.title,
       text: toast.text,
     };
-    console.log(newToast);
     setToasts([...toasts, newToast]);
   };
 
