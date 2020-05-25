@@ -13,6 +13,7 @@ const ToastsProvider: React.FC<PropsType> = ({ children }: PropsType) => {
   const saveToast = (toast: IToast) => {
     const newToast: IToast = {
       id: Math.random(), // for testing only
+      type: toast.type,
       title: toast.title,
       text: toast.text,
     };

@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { currency, unit, IProduct, IHistory } from "../interfaces/interfaces";
+import {
+  currency,
+  unit,
+  IProduct,
+  IHistory,
+  ToastType,
+} from "../interfaces/interfaces";
 import {
   getData,
   toggleActive,
@@ -78,6 +84,7 @@ const ProductsTable: React.FC = () => {
       updateItems(toggleActive(id));
       saveToast({
         title: `Product (Product Id: ${id}) updated`,
+        type: ToastType.success,
         text: `Property "active" toggled successfully `,
       });
     }
@@ -94,6 +101,7 @@ const ProductsTable: React.FC = () => {
       updateItems(updatePrice(inputData.id, price));
       saveToast({
         title: `Product (Id: ${inputData.id}) updated`,
+        type: ToastType.success,
         text: `Price updated successfully (${price.value} ${currency}) `,
       });
     }
@@ -110,6 +118,7 @@ const ProductsTable: React.FC = () => {
       updateItems(updateQuantity(inputData.id, quantity));
       saveToast({
         title: `Product (Id: ${inputData.id}) updated`,
+        type: ToastType.success,
         text: `Quantity updated successfully (${quantity.value} ${unit})`,
       });
     }
@@ -125,6 +134,7 @@ const ProductsTable: React.FC = () => {
       deleteItem(deteleFromList(id));
       saveToast({
         title: `Product (Id: ${id}) deleted`,
+        type: ToastType.danger,
         text: `Product deleted successfully`,
       });
     }

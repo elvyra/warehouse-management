@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
-import { IProduct, IHistory, currency, unit } from "../interfaces/interfaces";
+import {
+  IProduct,
+  IHistory,
+  currency,
+  unit,
+  ToastType,
+} from "../interfaces/interfaces";
 import {
   getItem,
   updateProps,
@@ -43,6 +49,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     setItem(updateProps(CreateEditedProduct(event)));
     saveToast({
       title: `Product updated successfully`,
+      type: ToastType.success,
       text: `Product properties updated`,
     });
   };
@@ -59,6 +66,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       setItem(updatePrice(id, price));
       saveToast({
         title: `Product price updated successfully`,
+        type: ToastType.success,
         text: `Current price ${price.value} ${currency}`,
       });
     }
@@ -78,6 +86,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       setItem(updateQuantity(id, quantity));
       saveToast({
         title: `Product quantity updated successfully`,
+        type: ToastType.success,
         text: `Current stock: ${quantity.value} ${unit}`,
       });
     }

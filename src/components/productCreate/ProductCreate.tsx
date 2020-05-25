@@ -5,6 +5,7 @@ import { CreateNewProduct } from "../productForm/CreateProductFromFormData";
 import { createItem } from "../localStorage/LocalStorage";
 import { Col, Row, Button, Form } from "react-bootstrap";
 import { ToastContext } from "../toasts/ToastsProvider";
+import { ToastType } from "../interfaces/interfaces";
 
 const ProductCreate: React.FC = () => {
   const handleChangeActive = () => {};
@@ -15,6 +16,7 @@ const ProductCreate: React.FC = () => {
     let item = createItem(CreateNewProduct(event));
     saveToast({
       title: `Product created successfully`,
+      type: ToastType.success,
       text: `New product Id : (Id: ${item.id})`,
     });
     event.currentTarget.reset();

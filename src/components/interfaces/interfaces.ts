@@ -49,6 +49,12 @@ export enum ProductColor {
 
 export interface IToast {
   id?: number;
+  type: ToastType;
   title: string;
   text: string;
+}
+
+export enum ToastType {
+  "success" = 0,
+  "danger" = 1,
 }

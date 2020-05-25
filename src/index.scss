@@ -23,4 +23,9 @@ $theme-colors: (
   &-success > &-header {
     background-color: theme-color-level("success", -11);
   }
+
+  &-danger,
+  &-danger > &-header {
+    background-color: theme-color-level("danger", -11);
+  }
 }
