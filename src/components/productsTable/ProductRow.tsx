@@ -87,15 +87,7 @@ const ProductRow: React.FC<PropsType> = ({
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button
-                variant="danger"
-                /* onClick={() =>
-                  // handleClose();
-                  handleDelete
-                } */
-                data-id={item.id}
-                onClick={handleDelete}
-              >
+              <Button variant="danger" data-id={item.id} onClick={handleDelete}>
                 Delete
               </Button>
             </Modal.Footer>
