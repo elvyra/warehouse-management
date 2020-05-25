@@ -10,7 +10,7 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductRow from "./ProductRow";
 import { Table } from "react-bootstrap";
-import { ToastContext } from "../toast/ToastsProvider";
+import { ToastContext } from "../toasts/ToastsProvider";
 
 // Used for receiving Price and Quantity input data
 type InputData = {

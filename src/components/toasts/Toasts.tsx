@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ToastCustom from "./ToastCustom";
 import { IToast } from "../interfaces/interfaces";
-import { ToastContext } from "../toast/ToastsProvider";
+import { ToastContext } from "./ToastsProvider";
 
 const Toasts: React.FC = () => {
   const { toasts } = useContext(ToastContext);
