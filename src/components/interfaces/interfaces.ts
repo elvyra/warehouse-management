@@ -15,12 +15,7 @@ export const delayToast = 10000;
 
 // Time snapshot fot Toasts
 export const currentTime = (): string =>
-  new Date(Date.now()).toLocaleTimeString([], {
-    hour12: false,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  new Date(Date.now()).toLocaleTimeString();
 
 export interface IProduct {
   id?: string;
