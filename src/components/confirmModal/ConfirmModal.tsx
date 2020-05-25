@@ -6,6 +6,7 @@ type PropsType = {
   title: string;
   text: string;
   action: any;
+  actionTitle: string;
 };
 
 const ConfirmModal: React.FC<PropsType> = ({
@@ -13,6 +14,7 @@ const ConfirmModal: React.FC<PropsType> = ({
   title,
   text,
   action,
+  actionTitle,
 }: PropsType): JSX.Element => {
   const [show, setShow] = useState(false);
 
@@ -22,7 +24,7 @@ const ConfirmModal: React.FC<PropsType> = ({
   return (
     <>
       <Button variant="danger" onClick={handleShow}>
-        Delete
+        {actionTitle}
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -34,7 +36,7 @@ const ConfirmModal: React.FC<PropsType> = ({
             Cancel
           </Button>
           <Button variant="danger" data-id={id} onClick={action}>
-            Delete
+            {actionTitle}
           </Button>
         </Modal.Footer>
       </Modal>
