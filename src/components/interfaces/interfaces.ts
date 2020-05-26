@@ -4,6 +4,9 @@ export const currency = "€";
 // Units symbol
 export const unit = "pcs";
 
+// Weight units symbol
+export const weight = "kg";
+
 // Highlight color code
 export const color = "red";
 

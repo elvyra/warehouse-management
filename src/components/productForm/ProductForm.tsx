@@ -1,7 +1,12 @@
 import React from "react";
-import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
+import {
+  weight,
+  IProduct,
+  ProductType,
+  ProductColor,
+} from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
-import { Col, Row, Form } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 
 type PropsType = {
   product?: IProduct;
@@ -11,7 +16,7 @@ type PropsType = {
 const ProductForm: React.FC<PropsType> = ({
   product,
   handleChangeActive,
-}: PropsType) => {
+}: PropsType): JSX.Element => {
   return (
     <>
       <Form.Row>
@@ -78,7 +83,7 @@ const ProductForm: React.FC<PropsType> = ({
           </Form.Control>
         </Form.Group>
         <Form.Group as={Col} lg="3">
-          <Form.Label>Weight</Form.Label>
+          <Form.Label>Weight ({weight})</Form.Label>
           <Form.Control
             type="number"
             min="0"
