@@ -15,6 +15,8 @@ const Title = (template: ToastTemplate, text: string): string => {
       return `Product Id: ${text} updated`;
     case ToastTemplate.deleted:
       return `Product Id: ${text} deleted`;
+    case ToastTemplate.seeded:
+      return `Data seeding`;
     default:
       return "";
   }
@@ -28,6 +30,8 @@ const Text = (template: ToastTemplate, text?: string): string => {
       return `Product updated successflly. ${text ? text : ""}`;
     case ToastTemplate.deleted:
       return `Product deleted successflly. ${text ? text : ""}`;
+    case ToastTemplate.seeded:
+      return `Database successfully seeded with demo products.`;
     default:
       return "";
   }

@@ -1,6 +1,7 @@
-import { createItem } from "../localStorage/LocalStorage";
+import { clearData, createItem } from "../localStorage/LocalStorage";
 
 const dataSeed = (): void => {
+  clearData();
   createItem({
     name: "Vaza",
     EAN: "12-331-355-777",

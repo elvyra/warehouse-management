@@ -12,6 +12,11 @@ export const saveData = (list: IProduct[]): void => {
   localStorage.setItem("stock", JSON.stringify(list));
 };
 
+// Clear list of IProduct in localstorage
+export const clearData = (): void => {
+  localStorage.removeItem("stock");
+};
+
 // Toggles item active prop, returns updated item or null if not found
 export const toggleActive = (id: string): IProduct | null => {
   let items: IProduct[] = getData();
