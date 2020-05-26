@@ -54,7 +54,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
     saveToast(
       ToastType.success,
       ToastTemplate.updated,
-      "id misssing",
+      "",
       "Product properties updated"
     );
   };
