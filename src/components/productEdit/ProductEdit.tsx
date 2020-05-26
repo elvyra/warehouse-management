@@ -22,11 +22,6 @@ import { Form, Button, CardDeck, Card } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
 import HistoryEdit from "./HistoryEdit";
 
-type newHistoryValue = {
-  id: string;
-  value: IHistory;
-};
-
 enum HistoryUpdateActionTarget {
   "price" = "Price",
   "quantity" = "Quantity",
@@ -59,61 +54,54 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
     );
   };
 
-  const getNewValue = (
-    event: React.FormEvent<HTMLFormElement>
-  ): newHistoryValue => {
-    let id: string | undefined = ((event.currentTarget
-      .updatedValue as unknown) as HTMLInputElement).dataset.id;
-    let value: IHistory = {
-      value: Number(event.currentTarget.updatedValue.value),
-      date: Date.now(),
-    };
-    return {
-      id: id ? id : "",
-      value: value,
-    };
-  };
-
   const showToastOnUpdatedHistory = (
     text: string,
-    item: newHistoryValue
+    id: string,
+    item: IHistory
   ): void => {
-    if (item.value.value > 0) {
+    if (item.value > 0) {
       saveToast(
         ToastType.success,
         ToastTemplate.updated,
-        item.id,
-        `${text}: ${item.value.value} ${currency}`
+        id,
+        `${text}: ${item.value} ${currency}`
       );
     } else {
       saveToast(
         ToastType.warning,
         ToastTemplate.updated,
-        item.id,
-        `${text}: ${item.value.value} ${currency}`
+        id,
+        `${text}: ${item.value} ${currency}`
       );
     }
   };
 
   const handleHistoryUpdate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let newValue = getNewValue(event);
+
+    let id: string = event.currentTarget.dataset.id
+      ? event.currentTarget.dataset.id
+      : "";
+    let value: IHistory = {
+      value: Number(event.currentTarget.dataset.value),
+      date: Date.now(),
+    };
 
     switch (event.currentTarget.dataset.action) {
       case HistoryUpdateActionTarget.price:
-        console.log("jei, price action");
-        setItem(updatePrice(newValue.id, newValue.value));
+        setItem(updatePrice(id, value));
         showToastOnUpdatedHistory(
           `Current ${HistoryUpdateActionTarget.price.toLowerCase()}`,
-          newValue
+          id,
+          value
         );
         break;
       case HistoryUpdateActionTarget.quantity:
-        console.log("blet quantity");
-        setItem(updateQuantity(newValue.id, newValue.value));
+        setItem(updateQuantity(id, value));
         showToastOnUpdatedHistory(
           `Current ${HistoryUpdateActionTarget.quantity.toLowerCase()}`,
-          newValue
+          id,
+          value
         );
         break;
       default:

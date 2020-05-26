@@ -28,7 +28,12 @@ const HistoryEdit: React.FC<PropsType> = ({
     <Card>
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Form onSubmit={action} data-action={title}>
+        <Form
+          onSubmit={action}
+          data-action={title}
+          data-id={id}
+          data-value={value}
+        >
           <Form.Group as={Row} className="w-100">
             <Form.Label column md="3">
               Current ({units})
