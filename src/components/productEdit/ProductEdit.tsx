@@ -22,6 +22,11 @@ import { Form, Button, CardDeck, Card } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
 import HistoryEdit from "./HistoryEdit";
 
+type newHistoryValue = {
+  id: string;
+  value: IHistory;
+};
+
 interface MatchParams {
   id: string;
 }
@@ -49,62 +54,56 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
     );
   };
 
-  const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+  const getNewValue = (
+    event: React.FormEvent<HTMLFormElement>
+  ): newHistoryValue => {
     let id: string | undefined = ((event.currentTarget
       .updatedValue as unknown) as HTMLInputElement).dataset.id;
-    let price: IHistory = {
+    let value: IHistory = {
       value: Number(event.currentTarget.updatedValue.value),
       date: Date.now(),
     };
-    if (!isNullOrUndefined(id)) {
-      setItem(updatePrice(id, price));
-      if (price.value > 0) {
-        saveToast(
-          ToastType.success,
-          ToastTemplate.updated,
-          id,
-          `Current price ${price.value} ${currency}`
-        );
-      } else {
-        saveToast(
-          ToastType.warning,
-          ToastTemplate.updated,
-          id,
-          `Current price ${price.value} ${currency}`
-        );
-      }
+    return {
+      id: id ? id : "",
+      value: value,
+    };
+  };
+
+  const showToastonUpdatedHistory = (
+    text: string,
+    item: newHistoryValue
+  ): void => {
+    if (item.value.value > 0) {
+      saveToast(
+        ToastType.success,
+        ToastTemplate.updated,
+        item.id,
+        `${text}: ${item.value.value} ${currency}`
+      );
+    } else {
+      saveToast(
+        ToastType.warning,
+        ToastTemplate.updated,
+        item.id,
+        `${text}: ${item.value.value} ${currency}`
+      );
     }
+  };
+
+  const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    let newValue = getNewValue(event);
+    setItem(updatePrice(newValue.id, newValue.value));
+    showToastonUpdatedHistory("Current price", newValue);
   };
 
   const handleUpdateQuantity = (
     event: React.FormEvent<HTMLFormElement>
   ): void => {
     event.preventDefault();
-    let id: string | undefined = ((event.currentTarget
-      .updatedValue as unknown) as HTMLInputElement).dataset.id;
-    let quantity: IHistory = {
-      value: Number(event.currentTarget.updatedValue.value),
-      date: Date.now(),
-    };
-    if (!isNullOrUndefined(id)) {
-      setItem(updateQuantity(id, quantity));
-      if (quantity.value > 0) {
-        saveToast(
-          ToastType.success,
-          ToastTemplate.updated,
-          id,
-          `Current stock: ${quantity.value} ${unit}`
-        );
-      } else {
-        saveToast(
-          ToastType.warning,
-          ToastTemplate.updated,
-          id,
-          `Current stock: ${quantity.value} ${unit}`
-        );
-      }
-    }
+    let newValue = getNewValue(event);
+    setItem(updateQuantity(newValue.id, newValue.value));
+    showToastonUpdatedHistory("Current quantity", newValue);
   };
 
   /*
