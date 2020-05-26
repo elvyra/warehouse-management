@@ -5,41 +5,9 @@ import ProductTable from "../productsTable/ProductsTable";
 import ProducCreate from "../productCreate/ProductCreate";
 import ProductPreview from "../productPreview/ProductPreview";
 import ProductEdit from "../productEdit/ProductEdit";
-import { Container } from "react-bootstrap";
 import ToastsProvider from "../../context/ToastsProvider";
 import Toasts from "../toasts/Toasts";
-import NavBar from "../navbar/Navbar";
-
-const WithNavbarLayout = (props: any) => {
-  return (
-    <>
-      <NavBar />
-      <main>
-        <Container>{props.children}</Container>
-      </main>
-    </>
-  );
-};
-
-const WithNavBar = ({
-  component: Component,
-  ...rest
-}: {
-  exact: true;
-  path: string;
-  component: any;
-}) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => (
-        <WithNavbarLayout>
-          <Component {...props} />
-        </WithNavbarLayout>
-      )}
-    />
-  );
-};
+import RouteWithNavBar from "./RouteWithNavbar";
 
 const App: React.FC = () => {
   return (
@@ -48,10 +16,14 @@ const App: React.FC = () => {
         <Toasts />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <WithNavBar exact path="/products" component={ProductTable} />
-          <Route exact path="/products/create" component={ProducCreate} />
-          <Route path="/products/:id/edit" component={ProductEdit} />
-          <Route path="/products/:id" component={ProductPreview} />
+          <RouteWithNavBar exact path="/products" component={ProductTable} />
+          <RouteWithNavBar
+            exact
+            path="/products/create"
+            component={ProducCreate}
+          />
+          <RouteWithNavBar path="/products/:id/edit" component={ProductEdit} />
+          <RouteWithNavBar path="/products/:id" component={ProductPreview} />
         </Switch>
       </ToastsProvider>
     </Router>
