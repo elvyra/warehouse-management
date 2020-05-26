@@ -87,13 +87,13 @@ const ProductsTable: React.FC = () => {
             <Table hover responsive>
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th hidden>Id</th>
+                  <th>Active</th>
                   <th>Name</th>
                   <th>EAN</th>
-                  <th>Type</th>
                   <th>Weight, {weight}</th>
+                  <th>Type</th>
                   <th>Color</th>
-                  <th>Active</th>
                   <th>Price, {currency}</th>
                   <th>Quantity, {unit}</th>
                   <th></th>

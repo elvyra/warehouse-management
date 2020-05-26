@@ -23,12 +23,7 @@ const ProductRow: React.FC<PropsType> = ({
 }: PropsType) => {
   return (
     <tr className={item.quantityHistory[0].value <= 0 ? "highlight" : ""}>
-      <td>{item.id}</td>
-      <td>{item.name}</td>
-      <td>{item.EAN}</td>
-      <td>{ProductType[item.type]}</td>
-      <td>{item.weight}</td>
-      <td>{ProductColor[item.color]}</td>
+      <td hidden>{item.id}</td>
       <td>
         <Form.Check
           type="checkbox"
@@ -38,7 +33,14 @@ const ProductRow: React.FC<PropsType> = ({
           onChange={handleActiveChange}
         />
       </td>
-      <td>{item.priceHistory[0].value}</td>
+      <td>
+        <NavLink to={`/products/${item.id}`}>{item.name}</NavLink>
+      </td>
+      <td>{item.EAN}</td>
+      <td>{item.weight.toFixed(3)}</td>
+      <td>{ProductType[item.type]}</td>
+      <td>{ProductColor[item.color]}</td>
+      <td>{item.priceHistory[0].value.toFixed(2)}</td>
       <td>{item.quantityHistory[0].value}</td>
       <td>
         <ButtonGroup>
@@ -50,7 +52,7 @@ const ProductRow: React.FC<PropsType> = ({
           </NavLink>
           <NavLink
             to={`/products/${item.id}/edit`}
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-primary"
           >
             Edit
           </NavLink>
