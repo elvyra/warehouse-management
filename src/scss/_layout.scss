@@ -1,4 +1,4 @@
-@import "../../scss//imports";
+@import "./imports";
 
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
@@ -11,13 +11,23 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 90;
+      z-index: 900;
       height: 100%;
       background-color: theme-color("primary");
       color: theme-color("light");
     }
+
     main {
       margin-left: 200px;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1600px;
+    }
+
+    .card-body {
+      padding: 2rem;
     }
   }
 }
