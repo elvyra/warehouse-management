@@ -133,6 +133,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
                 <Form.Row>
                   <NavLink
                     to="/products"
+                    tabIndex={-1}
                     className="btn btn-link text-secondary ml-auto mr-2"
                   >
                     Back to list
