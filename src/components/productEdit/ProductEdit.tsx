@@ -18,23 +18,21 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductForm from "../productForm/ProductForm";
 import { CreateEditedProduct } from "../productForm/CreateProductFromFormData";
-import {
-  Col,
-  Row,
-  Form,
-  ListGroup,
-  Button,
-  CardDeck,
-  Card,
-} from "react-bootstrap";
+import { Form, Button, CardDeck, Card } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
+import HistoryEdit from "./HistoryEdit";
+
+enum HistoryUpdateActionTarget {
+  "price" = "Price",
+  "quantity" = "Quantity",
+}
 
 interface MatchParams {
   id: string;
 }
 interface PropsType extends RouteComponentProps<MatchParams> {}
 
-const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
+const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const [item, setItem] = useState<IProduct | null>(null);
   const { saveToast } = useContext(ToastsContext);
 
@@ -51,85 +49,63 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
     saveToast(
       ToastType.success,
       ToastTemplate.updated,
-      "id misssing",
+      "",
       "Product properties updated"
     );
   };
 
-  const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    let id: string | undefined = ((event.currentTarget
-      .price as unknown) as HTMLInputElement).dataset.id;
-    let price: IHistory = {
-      value: Number(event.currentTarget.price.value),
-      date: Date.now(),
-    };
-    if (!isNullOrUndefined(id)) {
-      setItem(updatePrice(id, price));
-      if (price.value > 0) {
-        saveToast(
-          ToastType.success,
-          ToastTemplate.updated,
-          id,
-          `Current price ${price.value} ${currency}`
-        );
-      } else {
-        saveToast(
-          ToastType.warning,
-          ToastTemplate.updated,
-          id,
-          `Current price ${price.value} ${currency}`
-        );
-      }
-    }
-  };
-
-  const handleUpdateQuantity = (
-    event: React.FormEvent<HTMLFormElement>
+  const showToastOnUpdatedHistory = (
+    text: string,
+    id: string,
+    item: IHistory
   ): void => {
-    event.preventDefault();
-    let id: string | undefined = ((event.currentTarget
-      .quantity as unknown) as HTMLInputElement).dataset.id;
-    let quantity: IHistory = {
-      value: Number(event.currentTarget.quantity.value),
-      date: Date.now(),
-    };
-    if (!isNullOrUndefined(id)) {
-      setItem(updateQuantity(id, quantity));
-      if (quantity.value > 0) {
-        saveToast(
-          ToastType.success,
-          ToastTemplate.updated,
-          id,
-          `Current stock: ${quantity.value} ${unit}`
-        );
-      } else {
-        saveToast(
-          ToastType.warning,
-          ToastTemplate.updated,
-          id,
-          `Current stock: ${quantity.value} ${unit}`
-        );
-      }
-    }
-  };
-  /*
-  const handlePriceUpdate = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      let inputData: InputData = getInputData(event);
-      let price: IHistory = {
-        value: Number(inputData.value),
-        date: Date.now(),
-      };
-      updateItems(updatePrice(inputData.id, price));
+    if (item.value > 0) {
       saveToast(
         ToastType.success,
         ToastTemplate.updated,
-        inputData.id,
-        `Current price: ${price.value} ${currency}`
+        id,
+        `${text}: ${item.value} ${currency}`
+      );
+    } else {
+      saveToast(
+        ToastType.warning,
+        ToastTemplate.updated,
+        id,
+        `${text}: ${item.value} ${currency}`
       );
     }
-  }; */
+  };
+
+  const handleHistoryUpdate = (
+    id: string,
+    newValue: number,
+    action: string
+  ) => {
+    let value: IHistory = {
+      value: newValue,
+      date: Date.now(),
+    };
+
+    switch (action) {
+      case HistoryUpdateActionTarget.price:
+        setItem(updatePrice(id, value));
+        showToastOnUpdatedHistory(
+          `Current ${HistoryUpdateActionTarget.price.toLowerCase()}`,
+          id,
+          value
+        );
+        break;
+      case HistoryUpdateActionTarget.quantity:
+        setItem(updateQuantity(id, value));
+        showToastOnUpdatedHistory(
+          `Current ${HistoryUpdateActionTarget.quantity.toLowerCase()}`,
+          id,
+          value
+        );
+        break;
+      default:
+    }
+  };
 
   return (
     <>
@@ -140,112 +116,47 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
           <Card style={{ flex: "1 1 100%" }} className="mb-4">
             <Card.Body>
               <Card.Title>Product details</Card.Title>
-              <Card.Text>
-                <Form onSubmit={handleChangeProps}>
-                  <Form.Group as={Row}>
-                    <Form.Label column md="2">
-                      Id
-                    </Form.Label>
-                    <Col md="10">
-                      <Form.Control
-                        type="text"
-                        name="id"
-                        defaultValue={item.id}
-                        plaintext
-                        readOnly
-                      />
-                    </Col>
-                  </Form.Group>
-                  <ProductForm
-                    product={item}
-                    handleChangeActive={handleChangeActive}
-                  />
-                  <Form.Row>
-                    <Col md="2" />
-                    <Col md="10">
-                      <Button type="submit" className="mr-2">
-                        Save
-                      </Button>
-                      <NavLink
-                        to="/products"
-                        className="btn btn-link text-secondary"
-                      >
-                        Back to list
-                      </NavLink>
-                    </Col>
-                  </Form.Row>
-                </Form>
-              </Card.Text>
+              <Card.Subtitle>ID: {item.id}</Card.Subtitle>
+              <Form onSubmit={handleChangeProps} className="mt-4">
+                <Form.Control
+                  type="text"
+                  name="id"
+                  defaultValue={item.id}
+                  plaintext
+                  readOnly
+                  hidden
+                />
+                <ProductForm
+                  product={item}
+                  handleChangeActive={handleChangeActive}
+                />
+                <Form.Row>
+                  <NavLink
+                    to="/products"
+                    tabIndex={-1}
+                    className="btn btn-link text-secondary ml-auto mr-2"
+                  >
+                    Back to list
+                  </NavLink>
+                  <Button type="submit">Save</Button>
+                </Form.Row>
+              </Form>
             </Card.Body>
           </Card>
-
-          <Card>
-            <Card.Body>
-              <Card.Title>Price</Card.Title>
-              <Card.Text>
-                <Form onSubmit={handleUpdatePrice}>
-                  <Form.Group as={Row} className="w-100">
-                    <Form.Label column md="3">
-                      Current ({currency})
-                    </Form.Label>
-                    <Col md="7">
-                      <Form.Control
-                        placeholder={item.priceHistory[0].value.toString()}
-                        type="text"
-                        name="price"
-                        data-id={item.id}
-                      />
-                    </Col>
-                    <Col md="2">
-                      <Button type="submit">Update</Button>
-                    </Col>
-                  </Form.Group>
-                </Form>
-              </Card.Text>
-            </Card.Body>
-            <ListGroup variant="flush">
-              {item.priceHistory.map((c: IHistory) => (
-                <ListGroup.Item key={c.date}>
-                  Price: {c.value} {currency} (Updated:{" "}
-                  {new Date(c.date).toLocaleString()})
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card>
-
-          <Card>
-            <Card.Body>
-              <Card.Title>Quantity</Card.Title>
-              <Card.Text>
-                <Form onSubmit={handleUpdateQuantity}>
-                  <Form.Group as={Row} className="w-100">
-                    <Form.Label column md="3">
-                      Current ({unit})
-                    </Form.Label>
-                    <Col md="7">
-                      <Form.Control
-                        type="text"
-                        name="quantity"
-                        data-id={item.id}
-                        placeholder={item!.quantityHistory[0].value.toString()}
-                      />
-                    </Col>
-                    <Col md="2">
-                      <Button type="submit">Update</Button>
-                    </Col>
-                  </Form.Group>
-                </Form>
-              </Card.Text>
-            </Card.Body>
-            <ListGroup variant="flush">
-              {item.quantityHistory.map((c: IHistory) => (
-                <ListGroup.Item key={c.date}>
-                  Quantity: {c.value} {unit} (Updated:{" "}
-                  {new Date(c.date).toLocaleString()})
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card>
+          <HistoryEdit
+            title={HistoryUpdateActionTarget.price.toString()}
+            id={item.id ? item.id : ""}
+            history={item.priceHistory}
+            units={currency}
+            action={handleHistoryUpdate}
+          />
+          <HistoryEdit
+            title={HistoryUpdateActionTarget.quantity.toString()}
+            id={item.id ? item.id : ""}
+            history={item.quantityHistory}
+            units={unit}
+            action={handleHistoryUpdate}
+          />
         </CardDeck>
       )}
     </>

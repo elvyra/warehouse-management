@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   currency,
   unit,
+  weight,
   IProduct,
   ToastType,
   ToastTemplate,
@@ -90,7 +91,7 @@ const ProductsTable: React.FC = () => {
                   <th>Name</th>
                   <th>EAN</th>
                   <th>Type</th>
-                  <th>Weight</th>
+                  <th>Weight, {weight}</th>
                   <th>Color</th>
                   <th>Active</th>
                   <th>Price, {currency}</th>

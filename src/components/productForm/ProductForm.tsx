@@ -1,7 +1,12 @@
 import React from "react";
-import { IProduct, ProductType, ProductColor } from "../interfaces/interfaces";
+import {
+  weight,
+  IProduct,
+  ProductType,
+  ProductColor,
+} from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
-import { Col, Row, Form } from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 
 type PropsType = {
   product?: IProduct;
@@ -11,39 +16,42 @@ type PropsType = {
 const ProductForm: React.FC<PropsType> = ({
   product,
   handleChangeActive,
-}: PropsType) => {
+}: PropsType): JSX.Element => {
   return (
     <>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Name
-        </Form.Label>
-        <Col md="10">
+      <Form.Row>
+        <Form.Group as={Col}>
+          <Form.Check
+            type="checkbox"
+            name="active"
+            defaultChecked={!isNullOrUndefined(product) ? product.active : true}
+            onChange={handleChangeActive}
+            label="Active"
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col}>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             name="name"
             defaultValue={!isNullOrUndefined(product) ? product.name : ""}
             autoFocus
           />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          EAN
-        </Form.Label>
-        <Col md="10">
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label>EAN</Form.Label>
           <Form.Control
             type="text"
             name="ean"
             defaultValue={!isNullOrUndefined(product) ? product.EAN : ""}
           />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Type
-        </Form.Label>
-        <Col md="10">
+        </Form.Group>
+      </Form.Row>
+      <Form.Row>
+        <Form.Group as={Col}>
+          <Form.Label>Type</Form.Label>
           <Form.Control
             as="select"
             defaultValue={!isNullOrUndefined(product) ? product.type : 0}
@@ -57,26 +65,9 @@ const ProductForm: React.FC<PropsType> = ({
                 </option>
               ))}
           </Form.Control>
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Weight
-        </Form.Label>
-        <Col md="10">
-          <Form.Control
-            type="number"
-            min="0"
-            name="weight"
-            defaultValue={!isNullOrUndefined(product) ? product.weight : 0}
-          />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Color
-        </Form.Label>
-        <Col md="10">
+        </Form.Group>
+        <Form.Group as={Col} lg="3">
+          <Form.Label>Color</Form.Label>
           <Form.Control
             as="select"
             defaultValue={!isNullOrUndefined(product) ? product.color : 0}
@@ -90,21 +81,17 @@ const ProductForm: React.FC<PropsType> = ({
                 </option>
               ))}
           </Form.Control>
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Active
-        </Form.Label>
-        <Col md="10">
-          <Form.Check
-            type="checkbox"
-            name="active"
-            defaultChecked={!isNullOrUndefined(product) ? product.active : true}
-            onChange={handleChangeActive}
+        </Form.Group>
+        <Form.Group as={Col} lg="3">
+          <Form.Label>Weight ({weight})</Form.Label>
+          <Form.Control
+            type="number"
+            min="0"
+            name="weight"
+            defaultValue={!isNullOrUndefined(product) ? product.weight : 0}
           />
-        </Col>
-      </Form.Group>
+        </Form.Group>
+      </Form.Row>
     </>
   );
 };
