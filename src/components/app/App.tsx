@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import RouteWithNavBar from "./RouteWithNavbar";
+import ToastsProvider from "../../context/ToastsProvider";
+import Toasts from "../toasts/Toasts";
 import HomePage from "../homePage/HomePage";
 import ProductTable from "../productsTable/ProductsTable";
 import ProducCreate from "../productCreate/ProductCreate";
 import ProductPreview from "../productPreview/ProductPreview";
 import ProductEdit from "../productEdit/ProductEdit";
-import ToastsProvider from "../../context/ToastsProvider";
-import Toasts from "../toasts/Toasts";
-import RouteWithNavBar from "./RouteWithNavbar";
 
 const App: React.FC = () => {
   return (

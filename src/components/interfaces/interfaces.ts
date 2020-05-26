@@ -73,4 +73,5 @@ export enum ToastTemplate {
   "created" = 0,
   "updated" = 1,
   "deleted" = 2,
+  "seeded" = 3,
 }
