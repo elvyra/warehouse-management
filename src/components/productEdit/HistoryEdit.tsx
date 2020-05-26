@@ -31,7 +31,7 @@ const HistoryEdit: React.FC<PropsType> = ({
                 <Form.Control
                   placeholder={history[0].value.toString()}
                   type="text"
-                  name="price"
+                  name="updatedValue"
                   data-id={id}
                 />
               </Col>

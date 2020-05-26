@@ -52,9 +52,9 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     let id: string | undefined = ((event.currentTarget
-      .price as unknown) as HTMLInputElement).dataset.id;
+      .updatedValue as unknown) as HTMLInputElement).dataset.id;
     let price: IHistory = {
-      value: Number(event.currentTarget.price.value),
+      value: Number(event.currentTarget.updatedValue.value),
       date: Date.now(),
     };
     if (!isNullOrUndefined(id)) {
@@ -82,9 +82,9 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   ): void => {
     event.preventDefault();
     let id: string | undefined = ((event.currentTarget
-      .quantity as unknown) as HTMLInputElement).dataset.id;
+      .updatedValue as unknown) as HTMLInputElement).dataset.id;
     let quantity: IHistory = {
-      value: Number(event.currentTarget.quantity.value),
+      value: Number(event.currentTarget.updatedValue.value),
       date: Date.now(),
     };
     if (!isNullOrUndefined(id)) {
