@@ -18,15 +18,15 @@ const HistoryEdit: React.FC<PropsType> = ({
   units,
   action,
 }: PropsType): JSX.Element => {
-  const [value, setValue] = useState<number>(history[0].value);
+  const [value, setValue] = useState<string>(history[0].value.toString());
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(Number(event.currentTarget.value));
+    setValue(event.currentTarget.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    action(id, value, title);
+    action(id, Number(value), title);
   };
 
   return (
@@ -53,9 +53,7 @@ const HistoryEdit: React.FC<PropsType> = ({
               />
             </Col>
             <Col md="2">
-              {value > 0 ? (
-                <Button type="submit">Update</Button>
-              ) : (
+              {value.length > 0 && Number(value) === 0 ? (
                 <ConfirmModal
                   id={id ? id : ""}
                   title={`${title} update`}
@@ -65,6 +63,13 @@ const HistoryEdit: React.FC<PropsType> = ({
                   }}
                   actionTitle="Update"
                 />
+              ) : (
+                <Button
+                  type="submit"
+                  disabled={value.length === 0 || Number(value) < 0}
+                >
+                  Update
+                </Button>
               )}
             </Col>
           </Form.Group>
