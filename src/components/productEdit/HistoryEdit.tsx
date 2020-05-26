@@ -21,26 +21,24 @@ const HistoryEdit: React.FC<PropsType> = ({
     <Card>
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>
-          <Form onSubmit={action}>
-            <Form.Group as={Row} className="w-100">
-              <Form.Label column md="3">
-                Current ({units})
-              </Form.Label>
-              <Col md="7">
-                <Form.Control
-                  placeholder={history[0].value.toString()}
-                  type="text"
-                  name="updatedValue"
-                  data-id={id}
-                />
-              </Col>
-              <Col md="2">
-                <Button type="submit">Update</Button>
-              </Col>
-            </Form.Group>
-          </Form>
-        </Card.Text>
+        <Form onSubmit={action} data-action={title}>
+          <Form.Group as={Row} className="w-100">
+            <Form.Label column md="3">
+              Current ({units})
+            </Form.Label>
+            <Col md="7">
+              <Form.Control
+                placeholder={history[0].value.toString()}
+                type="text"
+                name="updatedValue"
+                data-id={id}
+              />
+            </Col>
+            <Col md="2">
+              <Button type="submit">Update</Button>
+            </Col>
+          </Form.Group>
+        </Form>
       </Card.Body>
       <ListGroup variant="flush">
         {history.map((c: IHistory) => (

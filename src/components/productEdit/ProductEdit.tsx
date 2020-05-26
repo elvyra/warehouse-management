@@ -27,6 +27,11 @@ type newHistoryValue = {
   value: IHistory;
 };
 
+enum HistoryUpdateActionTarget {
+  "price" = "Price",
+  "quantity" = "Quantity",
+}
+
 interface MatchParams {
   id: string;
 }
@@ -69,7 +74,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
     };
   };
 
-  const showToastonUpdatedHistory = (
+  const showToastOnUpdatedHistory = (
     text: string,
     item: newHistoryValue
   ): void => {
@@ -90,39 +95,30 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
     }
   };
 
-  const handleUpdatePrice = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleHistoryUpdate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let newValue = getNewValue(event);
-    setItem(updatePrice(newValue.id, newValue.value));
-    showToastonUpdatedHistory("Current price", newValue);
-  };
 
-  const handleUpdateQuantity = (
-    event: React.FormEvent<HTMLFormElement>
-  ): void => {
-    event.preventDefault();
-    let newValue = getNewValue(event);
-    setItem(updateQuantity(newValue.id, newValue.value));
-    showToastonUpdatedHistory("Current quantity", newValue);
-  };
-
-  /*
-  const handlePriceUpdate = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      let inputData: InputData = getInputData(event);
-      let price: IHistory = {
-        value: Number(inputData.value),
-        date: Date.now(),
-      };
-      updateItems(updatePrice(inputData.id, price));
-      saveToast(
-        ToastType.success,
-        ToastTemplate.updated,
-        inputData.id,
-        `Current price: ${price.value} ${currency}`
-      );
+    switch (event.currentTarget.dataset.action) {
+      case HistoryUpdateActionTarget.price:
+        console.log("jei, price action");
+        setItem(updatePrice(newValue.id, newValue.value));
+        showToastOnUpdatedHistory(
+          `Current ${HistoryUpdateActionTarget.price.toLowerCase()}`,
+          newValue
+        );
+        break;
+      case HistoryUpdateActionTarget.quantity:
+        console.log("blet quantity");
+        setItem(updateQuantity(newValue.id, newValue.value));
+        showToastOnUpdatedHistory(
+          `Current ${HistoryUpdateActionTarget.quantity.toLowerCase()}`,
+          newValue
+        );
+        break;
+      default:
     }
-  }; */
+  };
 
   return (
     <>
@@ -159,21 +155,19 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
               </Form>
             </Card.Body>
           </Card>
-
           <HistoryEdit
-            title="Price"
+            title={HistoryUpdateActionTarget.price.toString()}
             id={item.id ? item.id : ""}
             history={item.priceHistory}
             units={currency}
-            action={handleUpdatePrice}
+            action={handleHistoryUpdate}
           />
-
           <HistoryEdit
-            title="Quantity"
+            title={HistoryUpdateActionTarget.quantity.toString()}
             id={item.id ? item.id : ""}
             history={item.quantityHistory}
             units={unit}
-            action={handleUpdateQuantity}
+            action={handleHistoryUpdate}
           />
         </CardDeck>
       )}
