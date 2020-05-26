@@ -35,7 +35,14 @@ const ConfirmModal: React.FC<PropsType> = ({
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="danger" data-id={id} onClick={action}>
+          <Button
+            variant="danger"
+            data-id={id}
+            onClick={() => {
+              action();
+              handleClose();
+            }}
+          >
             {actionTitle}
           </Button>
         </Modal.Footer>

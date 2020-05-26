@@ -24,12 +24,17 @@ const HistoryEdit: React.FC<PropsType> = ({
     setValue(Number(event.currentTarget.value));
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    action(id, value, title);
+  };
+
   return (
     <Card>
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Form
-          onSubmit={action}
+          onSubmit={handleSubmit}
           data-action={title}
           data-id={id}
           data-value={value}
@@ -55,7 +60,9 @@ const HistoryEdit: React.FC<PropsType> = ({
                   id={id ? id : ""}
                   title={`${title} update`}
                   text={`Current ${title.toLowerCase()} value will be set to ${value}. Are you sure?`}
-                  action={action}
+                  action={() => {
+                    action(id, value, title);
+                  }}
                   actionTitle="Update"
                 />
               )}

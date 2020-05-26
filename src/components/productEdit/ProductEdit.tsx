@@ -76,18 +76,17 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
     }
   };
 
-  const handleHistoryUpdate = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    let id: string = event.currentTarget.dataset.id
-      ? event.currentTarget.dataset.id
-      : "";
+  const handleHistoryUpdate = (
+    id: string,
+    newValue: number,
+    action: string
+  ) => {
     let value: IHistory = {
-      value: Number(event.currentTarget.dataset.value),
+      value: newValue,
       date: Date.now(),
     };
 
-    switch (event.currentTarget.dataset.action) {
+    switch (action) {
       case HistoryUpdateActionTarget.price:
         setItem(updatePrice(id, value));
         showToastOnUpdatedHistory(
