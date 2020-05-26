@@ -18,23 +18,16 @@ import {
 import { isNullOrUndefined } from "util";
 import ProductForm from "../productForm/ProductForm";
 import { CreateEditedProduct } from "../productForm/CreateProductFromFormData";
-import {
-  Col,
-  Row,
-  Form,
-  ListGroup,
-  Button,
-  CardDeck,
-  Card,
-} from "react-bootstrap";
+import { Form, Button, CardDeck, Card } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
+import HistoryEdit from "./HistoryEdit";
 
 interface MatchParams {
   id: string;
 }
 interface PropsType extends RouteComponentProps<MatchParams> {}
 
-const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
+const ProductEdit: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const [item, setItem] = useState<IProduct | null>(null);
   const { saveToast } = useContext(ToastsContext);
 
@@ -168,73 +161,21 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
             </Card.Body>
           </Card>
 
-          <Card>
-            <Card.Body>
-              <Card.Title>Price</Card.Title>
-              <Card.Text>
-                <Form onSubmit={handleUpdatePrice}>
-                  <Form.Group as={Row} className="w-100">
-                    <Form.Label column md="3">
-                      Current ({currency})
-                    </Form.Label>
-                    <Col md="7">
-                      <Form.Control
-                        placeholder={item.priceHistory[0].value.toString()}
-                        type="text"
-                        name="price"
-                        data-id={item.id}
-                      />
-                    </Col>
-                    <Col md="2">
-                      <Button type="submit">Update</Button>
-                    </Col>
-                  </Form.Group>
-                </Form>
-              </Card.Text>
-            </Card.Body>
-            <ListGroup variant="flush">
-              {item.priceHistory.map((c: IHistory) => (
-                <ListGroup.Item key={c.date}>
-                  Price: {c.value} {currency} (Updated:{" "}
-                  {new Date(c.date).toLocaleString()})
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card>
+          <HistoryEdit
+            title="Price"
+            id={item.id ? item.id : ""}
+            history={item.priceHistory}
+            units={currency}
+            action={handleUpdatePrice}
+          />
 
-          <Card>
-            <Card.Body>
-              <Card.Title>Quantity</Card.Title>
-              <Card.Text>
-                <Form onSubmit={handleUpdateQuantity}>
-                  <Form.Group as={Row} className="w-100">
-                    <Form.Label column md="3">
-                      Current ({unit})
-                    </Form.Label>
-                    <Col md="7">
-                      <Form.Control
-                        type="text"
-                        name="quantity"
-                        data-id={item.id}
-                        placeholder={item!.quantityHistory[0].value.toString()}
-                      />
-                    </Col>
-                    <Col md="2">
-                      <Button type="submit">Update</Button>
-                    </Col>
-                  </Form.Group>
-                </Form>
-              </Card.Text>
-            </Card.Body>
-            <ListGroup variant="flush">
-              {item.quantityHistory.map((c: IHistory) => (
-                <ListGroup.Item key={c.date}>
-                  Quantity: {c.value} {unit} (Updated:{" "}
-                  {new Date(c.date).toLocaleString()})
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card>
+          <HistoryEdit
+            title="Quantity"
+            id={item.id ? item.id : ""}
+            history={item.quantityHistory}
+            units={unit}
+            action={handleUpdateQuantity}
+          />
         </CardDeck>
       )}
     </>
