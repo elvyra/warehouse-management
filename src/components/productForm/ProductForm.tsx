@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   weight,
   IProduct,
@@ -6,7 +6,7 @@ import {
   ProductColor,
 } from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
-import { Col, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 
 type PropsType = {
   product?: IProduct;
@@ -17,21 +17,30 @@ const ProductForm: React.FC<PropsType> = ({
   product,
   handleChangeActive,
 }: PropsType): JSX.Element => {
+  const [active, setActive] = useState<boolean>(
+    !isNullOrUndefined(product) ? product.active : true
+  );
   return (
     <>
-      <Form.Row>
-        <Form.Group as={Col}>
+      <Form.Group as={Row}>
+        <Col sm="1">
           <Form.Check
             type="checkbox"
             name="active"
-            defaultChecked={!isNullOrUndefined(product) ? product.active : true}
-            onChange={handleChangeActive}
-            label="Active"
+            checked={active}
+            onChange={() => {
+              setActive(!active);
+              handleChangeActive();
+            }}
+            style={{ marginTop: ".75rem" }}
           />
-        </Form.Group>
-      </Form.Row>
+        </Col>
+        <Form.Label column sm="6">
+          {active ? "Active" : "Inactive"}
+        </Form.Label>
+      </Form.Group>
       <Form.Row>
-        <Form.Group as={Col}>
+        <Form.Group as={Col} lg="6">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
@@ -40,7 +49,7 @@ const ProductForm: React.FC<PropsType> = ({
             autoFocus
           />
         </Form.Group>
-        <Form.Group as={Col}>
+        <Form.Group as={Col} lg="6">
           <Form.Label>EAN</Form.Label>
           <Form.Control
             type="text"

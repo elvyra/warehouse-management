@@ -4,6 +4,15 @@
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins/_breakpoints";
 
+@include media-breakpoint-down(lg) {
+  #root {
+    .card {
+      flex: 1 1 100%;
+      margin-top: 1rem;
+    }
+  }
+}
+
 @include media-breakpoint-up(lg) {
   #root {
     aside {

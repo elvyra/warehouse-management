@@ -39,7 +39,7 @@ const ProductCreate: React.FC = () => {
         <Form onSubmit={handleSubmit}>
           <ProductForm handleChangeActive={handleChangeActive} />
           <Form.Row>
-            <Form.Group as={Col}>
+            <Form.Group as={Col} lg="6">
               <Form.Label>Price ({currency})</Form.Label>
               <Form.Control
                 type="number"
@@ -48,7 +48,7 @@ const ProductCreate: React.FC = () => {
                 defaultValue="0"
               />
             </Form.Group>
-            <Form.Group as={Col}>
+            <Form.Group as={Col} lg="6">
               <Form.Label>Quantity ({unit})</Form.Label>
               <Form.Control
                 type="number"
