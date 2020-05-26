@@ -3,9 +3,14 @@ import { NavLink } from "react-router-dom";
 import ProductForm from "../productForm/ProductForm";
 import { CreateNewProduct } from "../productForm/CreateProductFromFormData";
 import { createItem } from "../localStorage/LocalStorage";
-import { Col, Row, Button, Form } from "react-bootstrap";
+import { Col, Row, Button, Form, Card } from "react-bootstrap";
 import ToastsContext from "../../context/ToastsContext";
-import { ToastType, ToastTemplate } from "../interfaces/interfaces";
+import {
+  currency,
+  unit,
+  ToastType,
+  ToastTemplate,
+} from "../interfaces/interfaces";
 
 const ProductCreate: React.FC = () => {
   const handleChangeActive = () => {};
@@ -28,41 +33,43 @@ const ProductCreate: React.FC = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <ProductForm handleChangeActive={handleChangeActive} />
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Price
-        </Form.Label>
-        <Col md="10">
-          <Form.Control type="number" min="0" name="price" defaultValue="0" />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column md="2">
-          Quantity
-        </Form.Label>
-        <Col md="10">
-          <Form.Control
-            type="number"
-            min="0"
-            name="quantity"
-            defaultValue="0"
-          />
-        </Col>
-      </Form.Group>
-      <Form.Row>
-        <Col md="2" />
-        <Col md="10">
-          <Button type="submit" className="mr-2">
-            Create
-          </Button>
-          <NavLink to="/products" className="btn btn-link text-secondary">
-            Back to list
-          </NavLink>
-        </Col>
-      </Form.Row>
-    </Form>
+    <Card>
+      <Card.Body>
+        <Card.Title>Create new product</Card.Title>
+        <Form onSubmit={handleSubmit}>
+          <ProductForm handleChangeActive={handleChangeActive} />
+          <Form.Row>
+            <Form.Group as={Col}>
+              <Form.Label>Price ({currency})</Form.Label>
+              <Form.Control
+                type="number"
+                min="0"
+                name="price"
+                defaultValue="0"
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>Quantity ({unit})</Form.Label>
+              <Form.Control
+                type="number"
+                min="0"
+                name="quantity"
+                defaultValue="0"
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <NavLink
+              to="/products"
+              className="btn btn-link text-secondary ml-auto mr-2"
+            >
+              Back to list
+            </NavLink>
+            <Button type="submit">Create</Button>
+          </Form.Row>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 
