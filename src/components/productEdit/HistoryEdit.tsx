@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { IHistory } from "../interfaces/interfaces";
 import { Card, Form, Row, Col, ListGroup, Button } from "react-bootstrap";
+import ConfirmModal from "../confirmModal/ConfirmModal";
 
 type PropsType = {
   title: string;
@@ -17,6 +18,12 @@ const HistoryEdit: React.FC<PropsType> = ({
   units,
   action,
 }: PropsType): JSX.Element => {
+  const [value, setValue] = useState<number>(history[0].value);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(Number(event.currentTarget.value));
+  };
+
   return (
     <Card>
       <Card.Body>
@@ -28,14 +35,25 @@ const HistoryEdit: React.FC<PropsType> = ({
             </Form.Label>
             <Col md="7">
               <Form.Control
-                placeholder={history[0].value.toString()}
-                type="text"
+                value={value}
+                type="number"
                 name="updatedValue"
                 data-id={id}
+                onChange={handleChange}
               />
             </Col>
             <Col md="2">
-              <Button type="submit">Update</Button>
+              {value > 0 ? (
+                <Button type="submit">Update</Button>
+              ) : (
+                <ConfirmModal
+                  id={id ? id : ""}
+                  title={`${title} update`}
+                  text={`Current ${title.toLowerCase()} value will be set to ${value}. Are you sure?`}
+                  action={action}
+                  actionTitle="Update"
+                />
+              )}
             </Col>
           </Form.Group>
         </Form>
