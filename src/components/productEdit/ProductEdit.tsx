@@ -113,6 +113,7 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
       }
     }
   };
+
   /*
   const handlePriceUpdate = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
@@ -140,42 +141,30 @@ const ProductEdit: React.FC<PropsType> = (props: PropsType) => {
           <Card style={{ flex: "1 1 100%" }} className="mb-4">
             <Card.Body>
               <Card.Title>Product details</Card.Title>
-              <Card.Text>
-                <Form onSubmit={handleChangeProps}>
-                  <Form.Group as={Row}>
-                    <Form.Label column md="2">
-                      Id
-                    </Form.Label>
-                    <Col md="10">
-                      <Form.Control
-                        type="text"
-                        name="id"
-                        defaultValue={item.id}
-                        plaintext
-                        readOnly
-                      />
-                    </Col>
-                  </Form.Group>
-                  <ProductForm
-                    product={item}
-                    handleChangeActive={handleChangeActive}
-                  />
-                  <Form.Row>
-                    <Col md="2" />
-                    <Col md="10">
-                      <Button type="submit" className="mr-2">
-                        Save
-                      </Button>
-                      <NavLink
-                        to="/products"
-                        className="btn btn-link text-secondary"
-                      >
-                        Back to list
-                      </NavLink>
-                    </Col>
-                  </Form.Row>
-                </Form>
-              </Card.Text>
+              <Card.Subtitle>ID: {item.id}</Card.Subtitle>
+              <Form onSubmit={handleChangeProps} className="mt-4">
+                <Form.Control
+                  type="text"
+                  name="id"
+                  defaultValue={item.id}
+                  plaintext
+                  readOnly
+                  hidden
+                />
+                <ProductForm
+                  product={item}
+                  handleChangeActive={handleChangeActive}
+                />
+                <Form.Row>
+                  <NavLink
+                    to="/products"
+                    className="btn btn-link text-secondary ml-auto mr-2"
+                  >
+                    Back to list
+                  </NavLink>
+                  <Button type="submit">Save</Button>
+                </Form.Row>
+              </Form>
             </Card.Body>
           </Card>
 
