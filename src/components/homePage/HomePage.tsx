@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Container, Row, Col } from "react-bootstrap";
-import dataSeed from "../dataSeed/dataSeed";
+import dataSeed from "../../dataSeed/dataSeed";
 import ToastsContext from "../../context/ToastsContext";
 import { ToastType, ToastTemplate } from "../interfaces/interfaces";
 import "./_HomePage.scss";
