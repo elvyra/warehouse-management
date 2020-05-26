@@ -8,16 +8,18 @@ import ProductEdit from "../productEdit/ProductEdit";
 import { Container } from "react-bootstrap";
 import ToastsProvider from "../../context/ToastsProvider";
 import Toasts from "../toasts/Toasts";
+import Navbar from "../navbar/Navbar";
 
 const App: React.FC = () => {
   return (
     <Router>
       <ToastsProvider>
+        <Toasts />
+        <Navbar />
         <Container>
-          <h1>Warehouse management</h1>
-          <Toasts />
           <Switch>
             <Route exact path="/" component={HomePage} />
+
             <Route exact path="/products" component={ProductTable} />
             <Route exact path="/products/create" component={ProducCreate} />
             <Route path="/products/:id/edit" component={ProductEdit} />
