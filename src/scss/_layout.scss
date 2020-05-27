@@ -40,3 +40,12 @@
     }
   }
 }
+
+.card .card-body {
+  .card-title {
+    color: theme-color("primary");
+  }
+  .card-subtitle {
+    color: theme-color-level("primary", -5);
+  }
+}

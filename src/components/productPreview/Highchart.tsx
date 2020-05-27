@@ -62,11 +62,12 @@ const Highchart: React.FC<PropsType> = ({
           {
             y: data[data.length - 1],
             marker: {
-              fillColor: color,
+              fillColor: color.current,
               radius: 5,
             },
           },
         ],
+        color: color.primary,
       },
     ],
     legend: {
