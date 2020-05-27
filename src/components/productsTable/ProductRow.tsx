@@ -60,7 +60,7 @@ const ProductRow: React.FC<PropsType> = ({
             id={item.id ? item.id : ""}
             title={`Deleting product "${item.name}"`}
             text={`Product Id: ${item.id}, in stock ${item.quantityHistory[0].value} ${unit}. Are you sure?`}
-            action={handleDelete}
+            action={() => handleDelete(item.id)}
             actionTitle="Delete"
           />
         </ButtonGroup>

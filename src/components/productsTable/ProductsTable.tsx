@@ -65,11 +65,8 @@ const ProductsTable: React.FC = () => {
   };
 
   // Handle item delete
-  const handleDelete = (event: any) => {
-    let id:
-      | string
-      | undefined = ((event.currentTarget as unknown) as HTMLInputElement)
-      .dataset.id;
+  const handleDelete = (id: string) => {
+    console.log(id);
     if (!isNullOrUndefined(id)) {
       deleteItem(deteleFromList(id));
       saveToast(ToastType.danger, ToastTemplate.deleted, id);
