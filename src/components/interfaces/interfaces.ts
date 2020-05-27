@@ -8,7 +8,7 @@ export const unit = "pcs";
 export const weight = "kg";
 
 // Highlight color code
-export const color = "red";
+export const color = { current: "#f24c64", primary: "#0a4f70" };
 
 // Number of max price and quantity history records
 export const numberOfRecords = 5;

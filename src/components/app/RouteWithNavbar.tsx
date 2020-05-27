@@ -2,11 +2,14 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import NavBar from "../navbar/Navbar";
+import "../../scss/_layout.scss";
 
 const WithNavbarLayout = (props: any) => {
   return (
     <>
-      <NavBar />
+      <aside>
+        <NavBar />
+      </aside>
       <main>
         <Container>{props.children}</Container>
       </main>

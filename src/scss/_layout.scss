@@ -1,0 +1,51 @@
+@import "./colors";
+
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints";
+
+@include media-breakpoint-down(lg) {
+  #root {
+    .card {
+      flex: 1 1 100%;
+      margin-top: 1rem;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  #root {
+    aside {
+      width: 200px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 900;
+      height: 100%;
+      background-color: theme-color("primary");
+      color: theme-color("light");
+    }
+
+    main {
+      margin-left: 200px;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1600px;
+    }
+
+    .card-body {
+      padding: 2rem;
+    }
+  }
+}
+
+.card .card-body {
+  .card-title {
+    color: theme-color("primary");
+  }
+  .card-subtitle {
+    color: theme-color-level("primary", -5);
+  }
+}
