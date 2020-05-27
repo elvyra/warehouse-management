@@ -5,7 +5,7 @@ import { getItem } from "../localStorage/LocalStorage";
 import { currency, unit } from "../interfaces/interfaces";
 import { isNullOrUndefined } from "util";
 import HistoryPreview from "./HistoryPreview";
-import { Tab, Tabs, ListGroup, Badge } from "react-bootstrap";
+import { Tab, Tabs, ListGroup, Badge, Card } from "react-bootstrap";
 
 interface MatchParams {
   id: string;
@@ -29,49 +29,53 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
             onSelect={(k: string) => setKey(k)}
           >
             <Tab eventKey="details" title="Product details">
-              <ListGroup className="mt-4 mb-4">
-                <ListGroup.Item>
-                  <b>Id: </b> {item.id}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Name: </b> {item.name}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>EAN: </b> {item.EAN}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Type: </b> {ProductType[item.type]}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Weight: </b> {item.weight}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Color: </b> {ProductColor[item.color]}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Active: </b> {item.active ? "active" : "not active"}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Price: </b> {item.priceHistory[0].value} {currency}
-                  {item.priceHistory[0].value <= 0 ? (
-                    <Badge variant="warning" className="ml-2">
-                      Price inaccuracy
-                    </Badge>
-                  ) : (
-                    <></>
-                  )}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Quantity: </b> {item.quantityHistory[0].value} {unit}
-                  {item.quantityHistory[0].value === 0 ? (
-                    <Badge variant="warning" className="ml-2">
-                      No in stock
-                    </Badge>
-                  ) : (
-                    <></>
-                  )}
-                </ListGroup.Item>
-              </ListGroup>
+              <Card className="mt-4 mb-4">
+                <Card.Body>
+                  <Card.Title>
+                    <b>Name: </b> {item.name}
+                  </Card.Title>
+                  <Card.Subtitle>
+                    <b>Id: </b> {item.id}
+                  </Card.Subtitle>
+                </Card.Body>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <b>Active: </b> {item.active ? "active" : "not active"}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>EAN: </b> {item.EAN}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Weight: </b> {item.weight}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Type: </b> {ProductType[item.type]}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Color: </b> {ProductColor[item.color]}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Price: </b> {item.priceHistory[0].value} {currency}
+                    {item.priceHistory[0].value <= 0 ? (
+                      <Badge variant="warning" className="ml-2">
+                        Price inaccuracy
+                      </Badge>
+                    ) : (
+                      <></>
+                    )}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <b>Quantity: </b> {item.quantityHistory[0].value} {unit}
+                    {item.quantityHistory[0].value === 0 ? (
+                      <Badge variant="warning" className="ml-2">
+                        No in stock
+                      </Badge>
+                    ) : (
+                      <></>
+                    )}
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
             </Tab>
             <Tab eventKey="price" title="Price history">
               <HistoryPreview
@@ -92,7 +96,12 @@ const ProductsPreview: React.FC<PropsType> = (props: PropsType) => {
               />
             </Tab>
           </Tabs>
-          <NavLink to="/products">Back to list</NavLink>
+          <NavLink to={`/products/${item.id}/edit`} className="btn btn-primary">
+            Edit
+          </NavLink>
+          <NavLink to="/products" className="btn btn-link mr-4">
+            Back to list
+          </NavLink>
         </>
       )}
     </>
