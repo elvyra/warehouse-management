@@ -1,0 +1,26 @@
+@import "../../scss/imports";
+
+.toast {
+  &-top-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    z-index: 999;
+  }
+  &-success,
+  &-success > &-header {
+    background-color: theme-color-level("success", -10);
+  }
+
+  &-danger,
+  &-danger > &-header {
+    background-color: theme-color-level("danger", -10);
+  }
+
+  &-warning,
+  &-warning > &-header {
+    background-color: theme-color-level("warning", -11);
+  }
+}

@@ -6,6 +6,7 @@ import {
   ToastType,
   ToastTemplate,
 } from "../interfaces/interfaces";
+import "./_Toast.scss";
 
 const Title = (template: ToastTemplate, text: string): string => {
   switch (template) {
