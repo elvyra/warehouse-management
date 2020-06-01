@@ -11,19 +11,16 @@
   }
   &-success,
   &-success > &-header {
-    background-color: theme-color-level("success", -10);
-    background-color: rgba(#46b1c9, 0.3);
+    @include background-color-transparent(theme-color("success"));
   }
 
   &-danger,
   &-danger > &-header {
-    background-color: theme-color-level("danger", -10);
-    background-color: rgba(#f24c64, 0.3);
+    @include background-color-transparent(theme-color("danger"));
   }
 
   &-warning,
   &-warning > &-header {
-    background-color: theme-color-level("warning", -11);
-    background-color: rgba(#f9dc5c, 0.3);
+    @include background-color-transparent(theme-color("warning"));
   }
 }

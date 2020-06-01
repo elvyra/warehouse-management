@@ -1,4 +1,4 @@
-@import "./colors";
+@import "./imports";
 
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
@@ -9,6 +9,9 @@
     .card {
       flex: 1 1 100%;
       margin-top: 1rem;
+    }
+    .navbar {
+      @include background-gradient;
     }
   }
 }
@@ -22,8 +25,12 @@
       left: 0;
       z-index: 900;
       height: 100%;
-      background-color: theme-color("primary");
+      @include background-gradient;
       color: theme-color("light");
+
+      .navbar {
+        background: transparent;
+      }
     }
 
     main {

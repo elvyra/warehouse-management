@@ -4,7 +4,7 @@ import { Navbar, Nav } from "react-bootstrap";
 
 const NavBar: React.FC = (): JSX.Element => {
   return (
-    <Navbar bg="primary" variant="dark" expand="lg">
+    <Navbar variant="dark" expand="lg">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mt-lg-5 flex-column">
