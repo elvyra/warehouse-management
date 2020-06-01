@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @import "./imports";
+=======
+@import "./colors";
+>>>>>>> origin/develop
 
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
@@ -10,9 +14,12 @@
       flex: 1 1 100%;
       margin-top: 1rem;
     }
+<<<<<<< HEAD
     .navbar {
       @include background-gradient;
     }
+=======
+>>>>>>> origin/develop
   }
 }
 
@@ -25,12 +32,17 @@
       left: 0;
       z-index: 900;
       height: 100%;
+<<<<<<< HEAD
       @include background-gradient;
       color: theme-color("light");
 
       .navbar {
         background: transparent;
       }
+=======
+      background-color: theme-color("primary");
+      color: theme-color("light");
+>>>>>>> origin/develop
     }
 
     main {

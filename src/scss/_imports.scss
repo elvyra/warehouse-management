@@ -1,4 +1,6 @@
-@import "./colors";
-@import "./variables";
+@import "./variables/colors";
+@import "./variables/variables";
+
+@import "./mixins/colors-mixins";
 
 @import "~bootstrap/scss/bootstrap";

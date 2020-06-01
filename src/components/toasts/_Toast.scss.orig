@@ -11,16 +11,31 @@
   }
   &-success,
   &-success > &-header {
+<<<<<<< HEAD
     @include background-color-transparent(theme-color("success"));
+=======
+    background-color: theme-color-level("success", -10);
+    background-color: rgba(#46b1c9, 0.3);
+>>>>>>> origin/develop
   }
 
   &-danger,
   &-danger > &-header {
+<<<<<<< HEAD
     @include background-color-transparent(theme-color("danger"));
+=======
+    background-color: theme-color-level("danger", -10);
+    background-color: rgba(#f24c64, 0.3);
+>>>>>>> origin/develop
   }
 
   &-warning,
   &-warning > &-header {
+<<<<<<< HEAD
     @include background-color-transparent(theme-color("warning"));
+=======
+    background-color: theme-color-level("warning", -11);
+    background-color: rgba(#f9dc5c, 0.3);
+>>>>>>> origin/develop
   }
 }

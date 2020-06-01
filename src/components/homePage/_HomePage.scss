@@ -1,11 +1,7 @@
 @import "../../scss/imports";
 
 .homepage {
-  background-image: linear-gradient(
-    172deg,
-    theme-color("primary"),
-    theme-color("success")
-  );
+  @include background-gradient;
   color: theme-color("light");
   height: 100%;
   width: 100%;

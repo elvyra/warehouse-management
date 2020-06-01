@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @import "./imports";
+=======
+@import "./colors";
+>>>>>>> origin/develop
 
 input[type="checkbox"] {
   position: relative;
