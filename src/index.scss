@@ -1,0 +1,17 @@
+@import "./scss/checkbox";
+@import "./scss/layout";
+@import "./scss/imports";
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+.highlight {
+  background-color: theme-color-level("danger", -11);
+}
+
+.normal-font-weight {
+  font-weight: 400;
+}

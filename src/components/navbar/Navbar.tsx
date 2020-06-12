@@ -1,0 +1,26 @@
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { Navbar, Nav } from "react-bootstrap";
+
+const NavBar: React.FC = (): JSX.Element => {
+  return (
+    <Navbar variant="dark" expand="lg">
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mt-lg-5 flex-column">
+          <NavLink to="/" className="nav-link">
+            Landing page
+          </NavLink>
+          <NavLink to="/products" className="nav-link">
+            Products list
+          </NavLink>
+          <NavLink to="/products/create" className="nav-link">
+            Create new
+          </NavLink>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+  );
+};
+
+export default NavBar;
